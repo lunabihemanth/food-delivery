@@ -2,7 +2,13 @@ package com.sprint.food_delivery.RestaurantsModule.MenuItems;
 
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,13 +16,14 @@ import jakarta.validation.constraints.NotNull;
 public class MenuItems {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Integer itemId;
 
     @NotBlank(message = "Item name cannot be empty")
     private String itemName;
 
-    @NotNull(message = "Description is required")
+    @NotBlank(message = "Description is required")
     private String description;
 
     @NotNull(message = "Price is required")
