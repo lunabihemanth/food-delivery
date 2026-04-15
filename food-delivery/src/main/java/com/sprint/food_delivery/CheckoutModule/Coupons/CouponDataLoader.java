@@ -1,10 +1,10 @@
-/* package com.sprint.food_delivery.config;
+package com.sprint.food_delivery.CheckoutModule.Coupons;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sprint.food_delivery.entity.Coupons;
-import com.sprint.food_delivery.repository.CouponRepository;
+import com.sprint.food_delivery.CheckoutModule.Coupons.Coupons;
+import com.sprint.food_delivery.CheckoutModule.Coupons.CouponRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,8 +87,8 @@ public class CouponDataLoader {
         Coupons c = new Coupons();
         c.setCouponId(id);
         c.setCouponCode(code);
-        c.setDiscountAmount(discount);
+        c.setDiscount(discount);
         c.setExpiryDate(LocalDate.parse(date));
         return c;
     }
-} */
+} 
