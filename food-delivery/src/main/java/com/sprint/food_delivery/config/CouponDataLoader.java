@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.config;
+/* package com.sprint.food_delivery.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -91,4 +91,4 @@ public class CouponDataLoader {
         c.setExpiryDate(LocalDate.parse(date));
         return c;
     }
-}
+} */

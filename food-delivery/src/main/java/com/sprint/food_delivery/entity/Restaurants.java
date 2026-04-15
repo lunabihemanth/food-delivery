@@ -2,57 +2,34 @@ package com.sprint.food_delivery.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
-<<<<<<< HEAD
+@Table(name = "restaurants")
 public class Restaurants {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")
     private Integer restaurantId;
 
     @NotBlank(message = "Restaurant name cannot be empty")
+    @Column(name = "restaurant_name")
     private String restaurantName;
-=======
 
-public class Restaurants {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "restaurant_id")
-	private Integer restaurantId;
-	
-    private String restaurantName;
+    @NotBlank(message = "Address cannot be empty")
+    @Column(name = "restaurant_address")
     private String restaurantAddress;
+
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
+    @Column(name = "restaurant_phone")
     private String restaurantPhone;
-	public Integer getRestaurantId() {
-		return restaurantId;
-	}
-	public void setRestaurantId(Integer restaurantId) {
-		this.restaurantId = restaurantId;
-	}
-	public String getRestaurantName() {
-		return restaurantName;
-	}
-	public void setRestaurantName(String restaurantName) {
-		this.restaurantName = restaurantName;
-	}
-	public String getRestaurantAddress() {
-		return restaurantAddress;
-	}
-	public void setRestaurantAddress(String restaurantAddress) {
-		this.restaurantAddress = restaurantAddress;
-	}
-	public String getRestaurantPhone() {
-		return restaurantPhone;
-	}
-	public void setRestaurantPhone(String restaurantPhone) {
-		this.restaurantPhone = restaurantPhone;
-	}
->>>>>>> 1c508e256c765be8bb706072d32cc2a111cfea0c
 
     @NotBlank(message = "Location cannot be empty")
+    @Column(name = "location")
     private String location;
+
+    // Getters and Setters
 
     public Integer getRestaurantId() {
         return restaurantId;
@@ -68,6 +45,22 @@ public class Restaurants {
 
     public void setRestaurantName(String restaurantName) {
         this.restaurantName = restaurantName;
+    }
+
+    public String getRestaurantAddress() {
+        return restaurantAddress;
+    }
+
+    public void setRestaurantAddress(String restaurantAddress) {
+        this.restaurantAddress = restaurantAddress;
+    }
+
+    public String getRestaurantPhone() {
+        return restaurantPhone;
+    }
+
+    public void setRestaurantPhone(String restaurantPhone) {
+        this.restaurantPhone = restaurantPhone;
     }
 
     public String getLocation() {

@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.service;
+/* package com.sprint.food_delivery.service;
 
 import java.util.List;
 
@@ -41,5 +41,7 @@ public class DeliveryAddressesService {
 	        System.out.println("Deleted address: " + id);
 	    }
 	}
+
+	*/
 
 

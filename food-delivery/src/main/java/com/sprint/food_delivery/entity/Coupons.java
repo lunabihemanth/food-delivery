@@ -4,33 +4,32 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 @Entity
+@Table(name = "coupons")
 public class Coupons {
 
     @Id
     @Column(name = "coupon_id")
     private Integer couponId;
 
-<<<<<<< HEAD
+    @NotBlank(message = "Coupon code cannot be empty")
     @Column(name = "coupon_code", unique = true)
     private String couponCode;
 
+    @NotNull(message = "Discount is required")
     @Column(name = "discount_amount")
-    private Double discountAmount;
+    private Double discount;
 
     @Column(name = "expiry_date")
     private LocalDate expiryDate;
-	
-}
-=======
-    @NotBlank(message = "Coupon code cannot be empty")
-    private String couponCode;
-
-    @NotNull(message = "Discount percentage is required")
-    private Double discount;
 
     @NotBlank(message = "Coupon status cannot be empty")
+    @Column(name = "status")
     private String status;
+
+    // Getters and Setters
 
     public Integer getCouponId() {
         return couponId;
@@ -56,6 +55,14 @@ public class Coupons {
         this.discount = discount;
     }
 
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -64,4 +71,3 @@ public class Coupons {
         this.status = status;
     }
 }
->>>>>>> 4a7846e7fdcd2b6cdc1e15a5a620b39312a9ebe2
