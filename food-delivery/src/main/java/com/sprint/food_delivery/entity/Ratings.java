@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-<<<<<<< HEAD
-=======
-
->>>>>>> 1c508e256c765be8bb706072d32cc2a111cfea0c
+@Table(name = "ratings")
 public class Ratings {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
     private Integer ratingId;
 
     @NotNull(message = "Rating value is required")
+    @Column(name = "rating_value")
     private Integer ratingValue;
 
+    @Column(name = "review")
     private String review;
 
     @ManyToOne
@@ -24,11 +24,12 @@ public class Ratings {
     @NotNull(message = "Restaurant is required")
     private Restaurants restaurant;
 
-<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name = "order_id")
     @NotNull(message = "Order is required")
     private Orders order;
+
+    // Getters and Setters
 
     public Integer getRatingId() {
         return ratingId;
@@ -70,48 +71,3 @@ public class Ratings {
         this.order = order;
     }
 }
-=======
-	public Integer getRatingId() {
-		return ratingId;
-	}
-
-	public void setRatingId(Integer ratingId) {
-		this.ratingId = ratingId;
-	}
-
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
-
-	public String getReview() {
-		return review;
-	}
-
-	public void setReview(String review) {
-		this.review = review;
-	}
-
-	public Orders getOrder() {
-		return order;
-	}
-
-	public void setOrder(Orders order) {
-		this.order = order;
-	}
-
-	public Restaurants getRestaurant() {
-		return restaurant;
-	}
-
-	public void setRestaurant(Restaurants restaurant) {
-		this.restaurant = restaurant;
-	}
-    
-    
-
-}
->>>>>>> 1c508e256c765be8bb706072d32cc2a111cfea0c
