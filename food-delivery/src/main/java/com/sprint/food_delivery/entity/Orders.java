@@ -1,6 +1,7 @@
 package com.sprint.food_delivery.entity;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +35,8 @@ public class Orders {
     @JoinColumn(name = "delivery_driver_id")
     private DeliveryDrivers deliveryDriver;
 
+    @OneToMany(mappedBy = "order")
+    private Set<OrdersCoupons> orderCoupons;
 	public Integer getOrderId() {
 		return orderId;
 	}
