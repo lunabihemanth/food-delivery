@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sprint.food_delivery.entity.Customers;
-import com.sprint.food_delivery.service.CustomerService;
+import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+import com.sprint.food_delivery.CustomersModule.Customers.CustomerService;
 
 @RestController
 	@RequestMapping("/customer")
