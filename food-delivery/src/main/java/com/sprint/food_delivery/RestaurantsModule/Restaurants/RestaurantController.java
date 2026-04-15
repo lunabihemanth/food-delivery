@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sprint.food_delivery.entity.Restaurants;
-import com.sprint.food_delivery.service.RestaurantService;
-
-
-
 @RestController
 	@RequestMapping("/restaurant")
 	public class RestaurantController {
