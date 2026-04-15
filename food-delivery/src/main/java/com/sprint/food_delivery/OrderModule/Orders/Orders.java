@@ -3,6 +3,11 @@ package com.sprint.food_delivery.OrderModule.Orders;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.sprint.food_delivery.CheckoutModule.OrdersCoupons.OrdersCoupons;
+import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDrivers;
+import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

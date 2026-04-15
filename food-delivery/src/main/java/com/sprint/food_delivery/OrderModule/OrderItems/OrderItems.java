@@ -1,5 +1,8 @@
 package com.sprint.food_delivery.OrderModule.OrderItems;
 
+import com.sprint.food_delivery.OrderModule.Orders.Orders;
+import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItems;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

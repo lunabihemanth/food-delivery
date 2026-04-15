@@ -16,8 +16,6 @@ public class DeliveryDriversService {
 	@Autowired
 	private DeliveryDriversRepository driverRepository;
 	
-	@Autowired 
-	private OrderRepository orderRepository;
 	
 	  public DeliveryDrivers save(DeliveryDrivers driver) {
 	        return driverRepository.save(driver);
@@ -46,6 +44,8 @@ public class DeliveryDriversService {
 	        driverRepository.deleteById(id);
 	    }
 
+	    @Autowired
+	    private OrderRepository orderRepository;
 
 	    public String assignDriverToOrder(Integer orderId, Integer driverId) {
 	        Orders order = orderRepository.findById(orderId).orElse(null);

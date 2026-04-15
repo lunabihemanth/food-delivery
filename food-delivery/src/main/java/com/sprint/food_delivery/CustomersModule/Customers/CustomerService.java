@@ -6,9 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.entity.Customers;
-import com.sprint.food_delivery.repository.CustomerRepository;
-
 
 @Service
 public class CustomerService {

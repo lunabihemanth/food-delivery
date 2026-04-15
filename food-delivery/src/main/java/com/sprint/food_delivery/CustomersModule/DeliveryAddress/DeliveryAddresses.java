@@ -1,5 +1,7 @@
 package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
 
+import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

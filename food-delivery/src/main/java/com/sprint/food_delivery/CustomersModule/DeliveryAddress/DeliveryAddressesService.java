@@ -1,19 +1,17 @@
-/* package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+ package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.entity.DeliveryAddresses;
-import com.sprint.food_delivery.repository.DeliveryAddressRepository;
 
 
 @Service
 public class DeliveryAddressesService {
 
 	@Autowired
-	private DeliveryAddressRepository addressRepository;
+	private DeliveryAddressesRepository addressRepository;
 	  public DeliveryAddresses save(DeliveryAddresses address) {
 	        return addressRepository.save(address);
 	    }
@@ -42,6 +40,6 @@ public class DeliveryAddressesService {
 	    }
 	}
 
-	*/
+
 
 

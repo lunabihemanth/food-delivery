@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sprint.food_delivery.entity.DeliveryDrivers;
-import com.sprint.food_delivery.service.DeliveryDriversService;
 
 @RestController
 	@RequestMapping("/driver")
 	public class DeliveryDriverController {
+	
 	    @Autowired
 	    private DeliveryDriversService driverService;
 
