@@ -1,5 +1,9 @@
 package com.sprint.food_delivery.repository;
 
-public interface MenuItemsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.sprint.food_delivery.entity.MenuItems;
+
+public interface MenuItemsRepository  extends JpaRepository<MenuItems, Integer>{
 
 }
