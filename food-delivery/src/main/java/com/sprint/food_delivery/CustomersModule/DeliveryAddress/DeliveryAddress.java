@@ -2,44 +2,42 @@ package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
 
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "delivery_addresses")
-public class DeliveryAddresses {
+public class DeliveryAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
     private Integer addressId;
 
-    @NotBlank(message = "Address Line 1 cannot be empty")
-    @Column(name = "address_line1")
+    @NotBlank
     private String addressLine1;
 
-    @Column(name = "address_line2")
     private String addressLine2;
 
-    @NotBlank(message = "City cannot be empty")
-    @Column(name = "city")
+    @NotBlank
     private String city;
 
-    @NotBlank(message = "State cannot be empty")
-    @Column(name = "state")
+    @NotBlank
     private String state;
 
-    @NotBlank(message = "Postal code cannot be empty")
-    @Column(name = "postal_code")
+    @NotBlank
     private String postalCode;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @NotNull(message = "Customer is required")
     private Customers customer;
 
-    // Getters and Setters
+    // Getters & Setters
 
     public Integer getAddressId() {
         return addressId;
