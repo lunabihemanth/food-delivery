@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter @Setter
+
 public class MenuItems {
 	@Id
     @Column(name = "item_id")
@@ -17,4 +17,44 @@ public class MenuItems {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurants restaurant;
+
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public String getItemDescription() {
+		return itemDescription;
+	}
+
+	public void setItemDescription(String itemDescription) {
+		this.itemDescription = itemDescription;
+	}
+
+	public Double getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(Double itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+
+	public Restaurants getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurants restaurant) {
+		this.restaurant = restaurant;
+	}
 }
