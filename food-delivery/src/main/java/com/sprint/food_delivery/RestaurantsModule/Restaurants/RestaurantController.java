@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1ba9f3a8deb7f2a721a8b80b8a9cd844f5bebb10
 @RestController
 	@RequestMapping("/restaurant")
 	public class RestaurantController {
