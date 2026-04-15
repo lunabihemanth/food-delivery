@@ -11,6 +11,18 @@ public class Coupons {
     @Column(name = "coupon_id")
     private Integer couponId;
 
+<<<<<<< HEAD
+    @Column(name = "coupon_code", unique = true)
+    private String couponCode;
+
+    @Column(name = "discount_amount")
+    private Double discountAmount;
+
+    @Column(name = "expiry_date")
+    private LocalDate expiryDate;
+	
+}
+=======
     @NotBlank(message = "Coupon code cannot be empty")
     private String couponCode;
 
@@ -52,3 +64,4 @@ public class Coupons {
         this.status = status;
     }
 }
+>>>>>>> 4a7846e7fdcd2b6cdc1e15a5a620b39312a9ebe2
