@@ -1,22 +1,21 @@
 package com.sprint.food_delivery.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
-@Getter @Setter
+@Table(name = "OrdersCoupons")
+@IdClass(OrdersCouponsId.class)
 public class OrdersCoupons {
-	@EmbeddedId
-    private OrderCouponId id;
 
+    @Id
     @ManyToOne
-    @MapsId("orderId")
     @JoinColumn(name = "order_id")
     private Orders order;
 
+    @Id
     @ManyToOne
-    @MapsId("couponId")
     @JoinColumn(name = "coupon_id")
     private Coupons coupon;
 
+    // getters & setters
 }
