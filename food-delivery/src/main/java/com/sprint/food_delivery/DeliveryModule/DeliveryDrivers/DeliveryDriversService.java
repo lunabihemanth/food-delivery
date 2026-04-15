@@ -5,73 +5,78 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.entity.DeliveryDrivers;
-import com.sprint.food_delivery.entity.Orders;
-import com.sprint.food_delivery.repository.DeliveryDriversRepository;
-import com.sprint.food_delivery.repository.OrderRepository;
+import com.sprint.food_delivery.OrderModule.Orders.OrderRepository;
+import com.sprint.food_delivery.OrderModule.Orders.Orders;
 
 @Service
 public class DeliveryDriversService {
 
-	@Autowired
-	private DeliveryDriversRepository driverRepository;
-	
-	@Autowired 
-	private OrderRepository orderRepository;
-	
-	  public DeliveryDrivers save(DeliveryDrivers driver) {
-	        return driverRepository.save(driver);
-	    }
+    @Autowired
+    private DeliveryDriversRepository driverRepository;
 
-	    public List<DeliveryDrivers> getAll() {
-	        return driverRepository.findAll();
-	    }
+    @Autowired
+    private OrderRepository orderRepository;
 
-	    public DeliveryDrivers findById(Integer id) {
-	        return driverRepository.findById(id).orElse(null);
-	    }
+    // CREATE
+    public DeliveryDrivers save(DeliveryDrivers driver) {
+        return driverRepository.save(driver);
+    }
 
-	    public DeliveryDrivers update(Integer id, DeliveryDrivers driver) {
-	        DeliveryDrivers existing = driverRepository.findById(id).orElse(null);
-	        if (existing != null) {
-	            existing.setDriverName(driver.getDriverName());
-	            existing.setDriverPhone(driver.getDriverPhone());
-	            existing.setDriverVehicle(driver.getDriverVehicle());
-	            return driverRepository.save(existing);
-	        }
-	        return null;
-	    }
+    // READ ALL
+    public List<DeliveryDrivers> getAll() {
+        return driverRepository.findAll();
+    }
 
-	    public void delete(Integer id) {
-	        driverRepository.deleteById(id);
-	    }
+    // READ BY ID
+    public DeliveryDrivers findById(Integer id) {
+        return driverRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+    }
 
+    // UPDATE
+    public DeliveryDrivers update(Integer id, DeliveryDrivers driver) {
+        DeliveryDrivers existing = driverRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
 
-	    public String assignDriverToOrder(Integer orderId, Integer driverId) {
-	        Orders order = orderRepository.findById(orderId).orElse(null);
-	        DeliveryDrivers driver = driverRepository.findById(driverId).orElse(null);
-	        if (order != null && driver != null) {
-	            order.setDeliveryDriver(driver);
-	            orderRepository.save(order);
-	            return "Driver " + driverId + " assigned to Order " + orderId;
-	        }
-	        return "Order or Driver not found.";
-	    }
+        existing.setDriverName(driver.getDriverName());
+        existing.setDriverPhone(driver.getDriverPhone());
+        existing.setDriverVehicle(driver.getDriverVehicle());
 
+        return driverRepository.save(existing);
+    }
 
-	    public List<Orders> getOrdersByDriver(Integer driverId) {
-	        return orderRepository.findByDeliveryDriverDriverId(driverId);
-	    }
+    // DELETE
+    public void delete(Integer id) {
+        driverRepository.deleteById(id);
+    }
 
-	    public String updateDeliveryStatus(Integer orderId, String status) {
-	        Orders order = orderRepository.findById(orderId).orElse(null);
-	        if (order != null) {
-	            order.setOrderStatus(status);
-	            orderRepository.save(order);
-	            return "Order " + orderId + " status updated to: " + status;
-	        }
-	        return "Order not found.";
-	    }
-	}
-	
+    // ASSIGN DRIVER TO ORDER
+    public String assignDriverToOrder(Integer orderId, Integer driverId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
 
+        DeliveryDrivers driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+
+        order.setDeliveryDriver(driver);
+        orderRepository.save(order);
+
+        return "Driver " + driverId + " assigned to Order " + orderId;
+    }
+
+    // GET ORDERS BY DRIVER
+    public List<Orders> getOrdersByDriver(Integer driverId) {
+        return orderRepository.findByDeliveryDriverDriverId(driverId);
+    }
+
+    // UPDATE DELIVERY STATUS
+    public String updateDeliveryStatus(Integer orderId, String status) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        order.setOrderStatus(status);
+        orderRepository.save(order);
+
+        return "Order " + orderId + " status updated to: " + status;
+    }
+}
