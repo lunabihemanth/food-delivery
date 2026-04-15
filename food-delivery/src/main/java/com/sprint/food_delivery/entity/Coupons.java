@@ -1,48 +1,54 @@
 package com.sprint.food_delivery.entity;
 
-import java.time.LocalDate;
-import java.util.Set;
-
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-
 public class Coupons {
-	
-	@Id
+
+    @Id
     @Column(name = "coupon_id")
     private Integer couponId;
 
+    @NotBlank(message = "Coupon code cannot be empty")
     private String couponCode;
+
+    @NotNull(message = "Discount percentage is required")
+    private Double discount;
+
+    @NotBlank(message = "Coupon status cannot be empty")
+    private String status;
+
     public Integer getCouponId() {
-		return couponId;
-	}
-	public void setCouponId(Integer couponId) {
-		this.couponId = couponId;
-	}
-	public String getCouponCode() {
-		return couponCode;
-	}
-	public void setCouponCode(String couponCode) {
-		this.couponCode = couponCode;
-	}
-	public Double getDiscountAmount() {
-		return discountAmount;
-	}
-	public void setDiscountAmount(Double discountAmount) {
-		this.discountAmount = discountAmount;
-	}
-	public java.time.LocalDate getExpiryDate() {
-		return expiryDate;
-	}
-	public void setExpiryDate(java.time.LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-	private Double discountAmount;
-    private java.time.LocalDate expiryDate;
-    
-    @OneToMany(mappedBy = "coupon")
-    private Set<OrdersCoupons> orderCoupons;
-	
+        return couponId;
+    }
+
+    public void setCouponId(Integer couponId) {
+        this.couponId = couponId;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
