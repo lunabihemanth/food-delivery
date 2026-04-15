@@ -12,8 +12,13 @@ public class Coupons {
     @Column(name = "coupon_id")
     private Integer couponId;
 
+    @Column(name = "coupon_code", unique = true)
     private String couponCode;
+
+    @Column(name = "discount_amount")
     private Double discountAmount;
-    private java.time.LocalDate expiryDate;
+
+    @Column(name = "expiry_date")
+    private LocalDate expiryDate;
 	
 }
