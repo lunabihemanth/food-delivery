@@ -15,7 +15,6 @@ public class DeliveryDrivers {
     @Column(name = "driver_id")
     private Integer driverId;
 
-<<<<<<< HEAD
     @NotBlank(message = "Driver name cannot be empty")
     private String driverName;
 
