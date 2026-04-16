@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerNotFoundException;
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
 import com.sprint.food_delivery.CustomersModule.Customers.ICustomerService;
 import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressRepository;
+import com.sprint.food_delivery.Exception.CustomerNotFoundException;
 
 @SpringBootTest
 public class CustomerTest {

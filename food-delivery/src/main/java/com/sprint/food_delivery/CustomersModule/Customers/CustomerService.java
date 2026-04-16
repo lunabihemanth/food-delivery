@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sprint.food_delivery.Exception.CustomerAlreadyExistsException;
+import com.sprint.food_delivery.Exception.CustomerNotFoundException;
+
 @Service
 public class CustomerService implements ICustomerService {
 

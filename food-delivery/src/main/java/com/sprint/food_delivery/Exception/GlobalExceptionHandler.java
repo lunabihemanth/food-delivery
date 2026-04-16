@@ -1,4 +1,5 @@
-package com.sprint.food_delivery.CustomersModule.Customers;
+package com.sprint.food_delivery.Exception;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -15,18 +16,46 @@ import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressN
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // 🔴 Customer not found
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(CustomerNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    // 🔴 Already exists
     @ExceptionHandler(CustomerAlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleAlreadyExists(CustomerAlreadyExistsException ex) {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    // 🔴 Duplicate email
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicate(DuplicateEmailException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    // 🔴 Invalid email
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidEmail(InvalidEmailException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    // 🔴 Invalid phone
+    @ExceptionHandler(InvalidPhoneException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidPhone(InvalidPhoneException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    // 🔴 Generic validation
+    @ExceptionHandler(InvalidCustomerDataException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidData(InvalidCustomerDataException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    // 🔴 Bean validation errors (@Valid)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
+
         Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(err -> fieldErrors.put(err.getField(), err.getDefaultMessage()));
@@ -36,19 +65,23 @@ public class GlobalExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", "Validation Failed");
         body.put("details", fieldErrors);
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
+    // 🔴 Delivery address not found
+    @ExceptionHandler(DeliveryAddressNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleAddressNotFound(DeliveryAddressNotFoundException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // 🔴 Catch-all
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
     }
 
-    @ExceptionHandler(DeliveryAddressNotFoundException.class)
-public ResponseEntity<Map<String, Object>> handleAddressNotFound(DeliveryAddressNotFoundException ex) {
-    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
-}
-
+    // ✅ Common response builder
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
