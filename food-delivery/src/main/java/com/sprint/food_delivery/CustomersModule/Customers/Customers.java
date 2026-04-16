@@ -1,12 +1,17 @@
 package com.sprint.food_delivery.CustomersModule.Customers;
 
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "customers")
 public class Customers {
 
@@ -15,50 +20,12 @@ public class Customers {
     @Column(name = "customer_id")
     private Integer customerId;
 
-    @NotBlank(message = "Customer name cannot be empty")
-    @Column(name = "customer_name")
+    @Column(name = "customer_name", nullable = false)
     private String customerName;
 
-    @Email(message = "Invalid CustomerEmail format")
-    @Column(name = "Customer_Email")
-    private String CustomerEmail;
+    @Column(name = "customer_email", unique = true, nullable = false)
+    private String customerEmail;
 
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
-    @Column(name = "Customer_Phone")
-    private String CustomerPhone;
-
-    // Getters and Setters
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerEmail() {
-        return CustomerEmail;
-    }
-
-    public void setCustomerEmail(String CustomerEmail) {
-        this.CustomerEmail = CustomerEmail;
-    }
-
-    public String getCustomerPhone() {
-        return CustomerPhone;
-    }
-
-    public void setCustomerPhone(String CustomerPhone) {
-        this.CustomerPhone = CustomerPhone;
-    }
-
+    @Column(name = "customer_phone", nullable = false)
+    private String customerPhone;
 }

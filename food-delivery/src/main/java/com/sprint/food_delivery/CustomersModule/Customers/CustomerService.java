@@ -1,45 +1,54 @@
 package com.sprint.food_delivery.CustomersModule.Customers;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CustomersModule.Customers.Customers;
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
-
-
 @Service
-public class CustomerService {
+public class CustomerService implements ICustomerService {
 
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	@Autowired
-	private CustomerRepository customerRepository;
-	public Customers save(Customers customer) {
+    @Override
+    public Customers save(CustomerDTO dto) {
+        if (customerRepository.existsByCustomerEmail(dto.getCustomerEmail())) {
+            throw new CustomerAlreadyExistsException(dto.getCustomerEmail());
+        }
+        Customers customer = new Customers();
+        customer.setCustomerName(dto.getCustomerName());
+        customer.setCustomerEmail(dto.getCustomerEmail());
+        customer.setCustomerPhone(dto.getCustomerPhone());
         return customerRepository.save(customer);
     }
+
+    @Override
     public List<Customers> getAll() {
         return customerRepository.findAll();
     }
+
+    @Override
     public Customers findById(Integer id) {
-        return customerRepository.findById(id).orElse(null);
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
-    public Customers update(Integer id, Customers customer) {
-        Customers existing = customerRepository.findById(id).orElse(null);
-        if (existing != null) {
-            existing.setCustomerName(customer.getCustomerName());
-            existing.setCustomerEmail(customer.getCustomerEmail());
-            existing.setCustomerPhone(customer.getCustomerPhone());
-            return customerRepository.save(existing);
-        }
-        return null;
+
+    @Override
+    public Customers update(Integer id, CustomerDTO dto) {
+        Customers existing = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+        existing.setCustomerName(dto.getCustomerName());
+        existing.setCustomerEmail(dto.getCustomerEmail());
+        existing.setCustomerPhone(dto.getCustomerPhone());
+        return customerRepository.save(existing);
     }
+
+    @Override
     public void delete(Integer id) {
+        if (!customerRepository.existsById(id)) {
+            throw new CustomerNotFoundException(id);
+        }
         customerRepository.deleteById(id);
-        System.out.println("Deleted customer: " + id);
     }
-
 }
-	
-
