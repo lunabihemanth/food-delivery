@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.Exception;
 
 public class DeliveryAddressNotFoundException extends RuntimeException {
     public DeliveryAddressNotFoundException(Integer id) {

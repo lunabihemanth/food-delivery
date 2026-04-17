@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerRequestDTO;
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerResponseDTO;
 import com.sprint.food_delivery.CustomersModule.Customers.ICustomerService;
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddress;
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressDTO;
+import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressRequestDTO;
+import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressResponseDTO;
 import com.sprint.food_delivery.CustomersModule.DeliveryAddress.IDeliveryAddressService;
 
 @SpringBootTest
@@ -25,26 +25,27 @@ public class DeliveryAddressTest {
     @Test
     void testCreateAddress() {
 
-        // Step 1: Create Customer
+        // 👉 Create Customer
         CustomerRequestDTO customerDTO = new CustomerRequestDTO();
-        customerDTO.setCustomerName("Test");
+        customerDTO.setCustomerName("Test User");
         customerDTO.setCustomerEmail("test@test.com");
-        customerDTO.setCustomerPhone("1234567890");
+        customerDTO.setCustomerPhone("9876543210");
 
         CustomerResponseDTO customer = customerService.save(customerDTO);
 
-        // Step 2: Create Address
-        DeliveryAddressDTO addressDTO = new DeliveryAddressDTO();
+        // 👉 Create Address
+        DeliveryAddressRequestDTO addressDTO = new DeliveryAddressRequestDTO();
         addressDTO.setAddressLine1("Main Street");
         addressDTO.setCity("Chennai");
         addressDTO.setState("TN");
         addressDTO.setPostalCode("600001");
         addressDTO.setCustomerId(customer.getCustomerId());
 
-        DeliveryAddress saved = addressService.save(addressDTO);
+        DeliveryAddressResponseDTO saved = addressService.save(addressDTO);
 
-        // Step 3: Assert
+        // 👉 Assertions
         assertNotNull(saved.getAddressId());
         assertEquals("Chennai", saved.getCity());
+        assertEquals("TN", saved.getState());
     }
 }

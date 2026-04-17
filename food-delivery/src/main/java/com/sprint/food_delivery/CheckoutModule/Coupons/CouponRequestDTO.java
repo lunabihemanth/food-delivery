@@ -1,30 +1,27 @@
 package com.sprint.food_delivery.CheckoutModule.Coupons;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class CouponRequestDTO {
 
-@Entity
-@Table(name = "coupons")
-public class Coupons {
-
-    @Id
-    @Column(name = "coupon_id")
+    @NotNull(message = "Coupon ID cannot be null")
     private Integer couponId;
 
-    @Column(name = "coupon_code", unique = true)
+    @NotBlank(message = "Coupon code cannot be empty")
     private String couponCode;
 
-    @Column(name = "discount_amount")
+    @NotNull(message = "Discount amount cannot be null")
+    @Positive(message = "Discount amount must be greater than 0")
     private Double discountAmount;
 
-    @Column(name = "expiry_date")
+    @NotNull(message = "Expiry date cannot be null")
+    @Future(message = "Expiry date must be in the future")
     private LocalDate expiryDate;
-
-
 
     public Integer getCouponId() {
         return couponId;
