@@ -1,38 +1,38 @@
 package com.sprint.food_delivery.CheckoutModule.Ratings;
 
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
+import com.sprint.food_delivery.OrdersModule.Orders.Orders;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ratings")
 public class Ratings {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
     private Integer ratingId;
 
-    @NotNull(message = "Rating value is required")
-    @Column(name = "rating_value")
-    private Integer ratingValue;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Orders order;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurants restaurant;
+
+    @Column(name = "rating")
+    private Integer rating;
 
     @Column(name = "review")
     private String review;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
-    @NotNull(message = "Restaurant is required")
-    private Restaurants restaurant;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    @NotNull(message = "Order is required")
-    private Orders order;
-
-    // Getters and Setters
+    // getters & setters
 
     public Integer getRatingId() {
         return ratingId;
@@ -42,20 +42,12 @@ public class Ratings {
         this.ratingId = ratingId;
     }
 
-    public Integer getRatingValue() {
-        return ratingValue;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setRatingValue(Integer ratingValue) {
-        this.ratingValue = ratingValue;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 
     public Restaurants getRestaurant() {
@@ -66,11 +58,19 @@ public class Ratings {
         this.restaurant = restaurant;
     }
 
-    public Orders getOrder() {
-        return order;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setOrder(Orders order) {
-        this.order = order;
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 }

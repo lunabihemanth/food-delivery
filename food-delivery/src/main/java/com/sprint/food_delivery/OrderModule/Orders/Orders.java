@@ -1,76 +1,58 @@
-package com.sprint.food_delivery.OrderModule.Orders;
+package com.sprint.food_delivery.OrdersModule.Orders;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
-import com.sprint.food_delivery.CheckoutModule.OrdersCoupons.OrdersCoupons;
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
 import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDrivers;
-import com.sprint.food_delivery.OrderModule.OrderItems.OrderItems;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
 public class Orders {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer orderId;
 
-    @NotNull(message = "Order date cannot be null")
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @NotBlank(message = "Order status cannot be empty")
-    @Column(name = "order_status") 
-    private String orderStatus;
-
-   
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customers customer;
 
-   
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
     private Restaurants restaurant;
 
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "driver_id")
+    @ManyToOne
+    @JoinColumn(name = "delivery_driver_id")
     private DeliveryDrivers deliveryDriver;
 
-    
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItems> orderItems;
-
-    
-    @OneToMany(mappedBy = "order")
-    private Set<OrdersCoupons> orderCoupons;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.orderDate == null) {
-            this.orderDate = LocalDateTime.now();
-        }
-    }
+    @Column(name = "order_status")
+    private String orderStatus;
 
     public Integer getOrderId() {
         return orderId;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Customers getCustomer() {
@@ -97,26 +79,13 @@ public class Orders {
         this.deliveryDriver = deliveryDriver;
     }
 
-    public List<OrderItems> getOrderItems() {
-        return orderItems;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderItems(List<OrderItems> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Set<OrdersCoupons> getOrderCoupons() {
-        return orderCoupons;
-    }
 
-    public void setOrderCoupons(Set<OrdersCoupons> orderCoupons) {
-        this.orderCoupons = orderCoupons;
-    }
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
 }
