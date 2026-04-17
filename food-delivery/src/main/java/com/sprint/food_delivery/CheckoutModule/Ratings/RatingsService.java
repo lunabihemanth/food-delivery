@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RatingsModule;
+package com.sprint.food_delivery.CheckoutModule.Ratings;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.OrdersModule.Orders.Orders;
-import com.sprint.food_delivery.OrdersModule.Orders.OrdersRepository;
+import com.sprint.food_delivery.OrderModule.Orders.Orders;
+import com.sprint.food_delivery.OrderModule.Orders.OrdersRepository;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRepository;
 
@@ -33,11 +33,6 @@ public class RatingsService implements IRatingsService {
         Restaurants restaurant = restaurantsRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
 
-        // 🔥 Business Rule: One rating per order
-        if (ratingsRepository.existsByOrder_OrderId(dto.getOrderId())) {
-            throw new RuntimeException("Rating already exists for this order");
-        }
-
         Ratings rating = new Ratings();
         rating.setOrder(order);
         rating.setRestaurant(restaurant);
@@ -46,7 +41,7 @@ public class RatingsService implements IRatingsService {
 
         Ratings saved = ratingsRepository.save(rating);
 
-        return mapToDTO(saved);
+        return map(saved);
     }
 
     // ✅ GET ALL
@@ -54,7 +49,7 @@ public class RatingsService implements IRatingsService {
     public List<RatingsResponseDTO> getAll() {
         return ratingsRepository.findAll()
                 .stream()
-                .map(this::mapToDTO)
+                .map(this::map)
                 .collect(Collectors.toList());
     }
 
@@ -65,20 +60,16 @@ public class RatingsService implements IRatingsService {
         Ratings rating = ratingsRepository.findById(ratingId)
                 .orElseThrow(() -> new RuntimeException("Rating not found"));
 
-        return mapToDTO(rating);
+        return map(rating);
     }
 
     // ✅ GET BY RESTAURANT
     @Override
     public List<RatingsResponseDTO> getByRestaurantId(Integer restaurantId) {
 
-        if (!restaurantsRepository.existsById(restaurantId)) {
-            throw new RuntimeException("Restaurant not found");
-        }
-
-        return ratingsRepository.findByRestaurant_RestaurantId(restaurantId)
+        return ratingsRepository.findByRestaurantRestaurantId(restaurantId)
                 .stream()
-                .map(this::mapToDTO)
+                .map(this::map)
                 .collect(Collectors.toList());
     }
 
@@ -102,22 +93,18 @@ public class RatingsService implements IRatingsService {
 
         Ratings updated = ratingsRepository.save(existing);
 
-        return mapToDTO(updated);
+        return map(updated);
     }
 
     // ✅ DELETE
     @Override
     public void delete(Integer ratingId) {
 
-        if (!ratingsRepository.existsById(ratingId)) {
-            throw new RuntimeException("Rating not found");
-        }
-
         ratingsRepository.deleteById(ratingId);
     }
 
-    // 🔁 MAPPER METHOD
-    private RatingsResponseDTO mapToDTO(Ratings rating) {
+    // 🔁 MAPPER
+    private RatingsResponseDTO map(Ratings rating) {
         return new RatingsResponseDTO(
                 rating.getRatingId(),
                 rating.getOrder().getOrderId(),

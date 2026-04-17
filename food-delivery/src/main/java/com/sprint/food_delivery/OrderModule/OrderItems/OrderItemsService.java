@@ -6,9 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.OrderModule.Orders.OrderRepository;
 import com.sprint.food_delivery.OrderModule.Orders.Orders;
-
+import com.sprint.food_delivery.OrderModule.Orders.OrdersRepository;
 import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItems;
 import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItemsRepository;
 
@@ -19,7 +18,7 @@ public class OrderItemsService implements IOrderItemsService {
     private OrderItemsRepository repository;
 
     @Autowired
-    private OrderRepository ordersRepository;
+    private OrdersRepository ordersRepository;
 
     @Autowired
     private MenuItemsRepository menuItemsRepository;

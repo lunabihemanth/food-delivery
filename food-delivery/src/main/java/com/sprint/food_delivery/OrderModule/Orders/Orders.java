@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.OrdersModule.Orders;
+package com.sprint.food_delivery.OrderModule.Orders;
 
 import java.time.LocalDateTime;
 
@@ -8,6 +8,8 @@ import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,6 +20,7 @@ import jakarta.persistence.Table;
 public class Orders {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ IMPORTANT FIX
     @Column(name = "order_id")
     private Integer orderId;
 
@@ -25,11 +28,11 @@ public class Orders {
     private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurants restaurant;
 
     @ManyToOne
@@ -38,6 +41,8 @@ public class Orders {
 
     @Column(name = "order_status")
     private String orderStatus;
+
+    // 🔽 GETTERS & SETTERS
 
     public Integer getOrderId() {
         return orderId;
@@ -86,6 +91,4 @@ public class Orders {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
-
-
 }

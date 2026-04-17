@@ -1,6 +1,6 @@
 package com.sprint.food_delivery.CheckoutModule.Ratings;
 
-import com.sprint.food_delivery.OrdersModule.Orders.Orders;
+import com.sprint.food_delivery.OrderModule.Orders.Orders;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
 import jakarta.persistence.Column;

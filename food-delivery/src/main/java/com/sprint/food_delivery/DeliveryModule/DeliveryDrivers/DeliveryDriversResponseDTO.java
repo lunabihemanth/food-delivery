@@ -1,31 +1,19 @@
 package com.sprint.food_delivery.DeliveryModule.DeliveryDrivers;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class DeliveryDriversResponseDTO {
 
-@Entity
-@Table(name = "delivery_drivers")
-public class DeliveryDrivers {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ important
-    @Column(name = "driver_id")
     private Integer driverId;
-
-    @Column(name = "driver_name")
     private String driverName;
-
-    @Column(name = "driver_phone")
     private String driverPhone;
-
-    @Column(name = "driver_vehicle")
     private String driverVehicle;
 
-    // getters & setters
+    public DeliveryDriversResponseDTO(Integer driverId, String driverName,
+                                      String driverPhone, String driverVehicle) {
+        this.driverId = driverId;
+        this.driverName = driverName;
+        this.driverPhone = driverPhone;
+        this.driverVehicle = driverVehicle;
+    }
 
     public Integer getDriverId() {
         return driverId;
@@ -58,4 +46,6 @@ public class DeliveryDrivers {
     public void setDriverVehicle(String driverVehicle) {
         this.driverVehicle = driverVehicle;
     }
+
+    
 }

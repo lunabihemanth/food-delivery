@@ -1,17 +1,13 @@
 package com.sprint.food_delivery.CheckoutModule.OrdersCoupons;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CheckoutModule.Coupons.Coupons;
-import com.sprint.food_delivery.CheckoutModule.Coupons.CouponsRepository;
-import com.sprint.food_delivery.OrderModule.OrderItems.OrderItemsRepository;
-import com.sprint.food_delivery.OrdersModule.Orders.Orders;
-import com.sprint.food_delivery.OrdersModule.Orders.OrdersRepository;
+import com.sprint.food_delivery.CheckoutModule.Coupons.*;
+import com.sprint.food_delivery.OrderModule.Orders.*;
 
 @Service
 public class OrdersCouponsService implements IOrdersCouponsService {
@@ -20,12 +16,12 @@ public class OrdersCouponsService implements IOrdersCouponsService {
     private OrdersCouponsRepository ordersCouponsRepository;
 
     @Autowired
-    private OrderItemsRepository ordersRepository;
+    private OrdersRepository ordersRepository;
 
     @Autowired
     private CouponsRepository couponsRepository;
 
-    // ✅ APPLY COUPON TO ORDER
+    // ✅ APPLY COUPON (NO VALIDATION)
     @Override
     public OrdersCouponsResponseDTO applyCoupon(OrdersCouponsRequestDTO dto) {
 
@@ -35,57 +31,42 @@ public class OrdersCouponsService implements IOrdersCouponsService {
         Coupons coupon = couponsRepository.findById(dto.getCouponId())
                 .orElseThrow(() -> new RuntimeException("Coupon not found"));
 
-        // 🔥 Business validation (important)
-        if (coupon.getExpiryDate().isBefore(LocalDate.now())) {
-            throw new RuntimeException("Coupon has expired");
-        }
-
-        // prevent duplicate application
         OrdersCouponsId id = new OrdersCouponsId(dto.getOrderId(), dto.getCouponId());
-        if (ordersCouponsRepository.existsById(id)) {
-            throw new RuntimeException("Coupon already applied to this order");
-        }
 
         OrdersCoupons entity = new OrdersCoupons();
         entity.setId(id);
         entity.setOrder(order);
         entity.setCoupon(coupon);
 
-        ordersCouponsRepository.save(entity);
+        OrdersCoupons saved = ordersCouponsRepository.save(entity);
 
-        return new OrdersCouponsResponseDTO(
-                dto.getOrderId(),
-                dto.getCouponId()
-        );
+        return map(saved);
     }
 
-    // ✅ GET ALL COUPONS APPLIED TO AN ORDER
+    // ✅ GET ALL COUPONS FOR ORDER
     @Override
     public List<OrdersCouponsResponseDTO> getCouponsByOrderId(Integer orderId) {
 
-        if (!ordersRepository.existsById(orderId)) {
-            throw new RuntimeException("Order not found");
-        }
-
         return ordersCouponsRepository.findByOrder_OrderId(orderId)
                 .stream()
-                .map(oc -> new OrdersCouponsResponseDTO(
-                        oc.getOrder().getOrderId(),
-                        oc.getCoupon().getCouponId()
-                ))
+                .map(this::map)
                 .collect(Collectors.toList());
     }
 
-    // ✅ REMOVE COUPON FROM ORDER
+    // ✅ REMOVE COUPON
     @Override
     public void removeCoupon(Integer orderId, Integer couponId) {
 
         OrdersCouponsId id = new OrdersCouponsId(orderId, couponId);
 
-        if (!ordersCouponsRepository.existsById(id)) {
-            throw new RuntimeException("Coupon not applied to this order");
-        }
-
         ordersCouponsRepository.deleteById(id);
+    }
+
+    // 🔁 MAPPER
+    private OrdersCouponsResponseDTO map(OrdersCoupons oc) {
+        return new OrdersCouponsResponseDTO(
+                oc.getOrder().getOrderId(),
+                oc.getCoupon().getCouponId()
+        );
     }
 }

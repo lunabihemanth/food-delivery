@@ -1,9 +1,8 @@
 package com.sprint.food_delivery.CheckoutModule.OrdersCoupons;
 
 import com.sprint.food_delivery.CheckoutModule.Coupons.Coupons;
-import com.sprint.food_delivery.OrdersModule.Orders.Orders;
+import com.sprint.food_delivery.OrderModule.Orders.Orders;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

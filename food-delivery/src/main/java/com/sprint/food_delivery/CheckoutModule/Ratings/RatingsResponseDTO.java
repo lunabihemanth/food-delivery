@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RatingsModule;
+package com.sprint.food_delivery.CheckoutModule.Ratings;
 
 public class RatingsResponseDTO {
 
