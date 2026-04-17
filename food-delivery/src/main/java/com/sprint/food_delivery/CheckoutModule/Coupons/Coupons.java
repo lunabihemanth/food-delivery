@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 public class Coupons {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer couponId;
@@ -26,8 +27,6 @@ public class Coupons {
 
     @Column(name = "expiry_date")
     private LocalDate expiryDate;
-
-
 
     public Integer getCouponId() {
         return couponId;
