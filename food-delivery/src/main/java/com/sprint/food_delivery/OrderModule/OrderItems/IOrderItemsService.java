@@ -12,5 +12,5 @@ public interface IOrderItemsService {
 
     OrderItemsResponseDTO update(Integer id, OrderItemsRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }

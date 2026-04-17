@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderItemsRepository extends JpaRepository<OrderItems, Integer> {
 
-    
+    //Derived
     boolean existsByOrderItemId(Integer orderItemId);
 
-   
+   //custom Query
     @Query("SELECT oi FROM OrderItems oi WHERE LOWER(oi.menuItem.itemName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<OrderItems> searchByItemName(@Param("name") String name);
 
-   
+   //Update Query
     @Modifying
     @Transactional
     @Query("UPDATE OrderItems oi SET oi.quantity = :quantity WHERE oi.orderItemId = :id")

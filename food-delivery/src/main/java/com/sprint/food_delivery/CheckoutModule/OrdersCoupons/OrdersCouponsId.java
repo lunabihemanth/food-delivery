@@ -38,7 +38,6 @@ public class OrdersCouponsId implements Serializable {
         this.couponId = couponId;
     }
 
-    // IMPORTANT for JPA identity handling
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

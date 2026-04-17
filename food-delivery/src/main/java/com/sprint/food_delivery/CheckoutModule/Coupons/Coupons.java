@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -13,6 +15,7 @@ public class Coupons {
 
     @Id
     @Column(name = "coupon_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer couponId;
 
     @Column(name = "coupon_code", unique = true)

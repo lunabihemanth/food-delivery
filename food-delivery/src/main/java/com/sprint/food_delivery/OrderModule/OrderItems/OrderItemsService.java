@@ -23,7 +23,7 @@ public class OrderItemsService implements IOrderItemsService {
     @Autowired
     private MenuItemsRepository menuItemsRepository;
 
-    // CREATE
+    // Create
     @Override
     public OrderItemsResponseDTO save(OrderItemsRequestDTO dto) {
 
@@ -48,7 +48,7 @@ public class OrderItemsService implements IOrderItemsService {
         );
     }
 
-    // GET ALL
+    // Get all
     @Override
     public List<OrderItemsResponseDTO> getAll() {
         return repository.findAll().stream()
@@ -60,7 +60,7 @@ public class OrderItemsService implements IOrderItemsService {
                 .collect(Collectors.toList());
     }
 
-    // GET BY ID
+    // Get by id
     @Override
     public OrderItemsResponseDTO findById(Integer id) {
         OrderItems oi = repository.findById(id)
@@ -74,7 +74,7 @@ public class OrderItemsService implements IOrderItemsService {
         );
     }
 
-    // UPDATE
+    // Update
     @Override
     public OrderItemsResponseDTO update(Integer id, OrderItemsRequestDTO dto) {
 
@@ -103,10 +103,12 @@ public class OrderItemsService implements IOrderItemsService {
 
     // DELETE
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("OrderItem not found");
         }
         repository.deleteById(id);
+        
+        return "Deleted";
     }
 }

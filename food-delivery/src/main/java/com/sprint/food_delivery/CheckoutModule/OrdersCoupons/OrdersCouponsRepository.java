@@ -10,20 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface OrdersCouponsRepository extends JpaRepository<OrdersCoupons, OrdersCouponsId> {
 
-    // ✅ DERIVED QUERY
+ 
     // Get all coupons applied to an order
     List<OrdersCoupons> findByOrder_OrderId(Integer orderId);
 
-    // --------------------------------------------------
 
-    // ✅ CUSTOM SELECT QUERY
     // Fetch all mappings for a given coupon
     @Query("SELECT oc FROM OrdersCoupons oc WHERE oc.coupon.couponId = :couponId")
     List<OrdersCoupons> findByCouponId(@Param("couponId") Integer couponId);
 
-    // --------------------------------------------------
 
-    // ✅ CUSTOM MODIFY (DELETE) QUERY
     @Modifying
     @Transactional
     @Query("DELETE FROM OrdersCoupons oc WHERE oc.order.orderId = :orderId AND oc.coupon.couponId = :couponId")

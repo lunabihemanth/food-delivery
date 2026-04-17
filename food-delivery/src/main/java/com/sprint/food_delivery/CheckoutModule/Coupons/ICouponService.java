@@ -14,5 +14,5 @@ public interface ICouponService {
 
     CouponResponseDTO update(Integer couponId, CouponRequestDTO dto);
 
-    void delete(Integer couponId);
+    String delete(Integer couponId);
 }
