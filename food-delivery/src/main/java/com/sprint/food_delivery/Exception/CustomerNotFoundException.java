@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.Customers;
+package com.sprint.food_delivery.Exception;
 
 public class CustomerNotFoundException extends RuntimeException {
     public CustomerNotFoundException(Integer id) {

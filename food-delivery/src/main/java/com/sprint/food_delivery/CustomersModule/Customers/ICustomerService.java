@@ -4,9 +4,14 @@ package com.sprint.food_delivery.CustomersModule.Customers;
 import java.util.List;
 
 public interface ICustomerService {
-    Customers save(CustomerDTO customerDTO);
-    List<Customers> getAll();
-    Customers findById(Integer id);
-    Customers update(Integer id, CustomerDTO customerDTO);
+
+    CustomerResponseDTO save(CustomerRequestDTO dto);
+
+    List<CustomerResponseDTO> getAll();
+
+    CustomerResponseDTO findById(Integer id);
+
+    CustomerResponseDTO update(Integer id, CustomerRequestDTO dto);
+
     void delete(Integer id);
 }

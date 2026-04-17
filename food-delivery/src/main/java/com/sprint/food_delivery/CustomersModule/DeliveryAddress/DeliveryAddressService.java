@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerNotFoundException;
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+import com.sprint.food_delivery.Exception.CustomerNotFoundException;
 
 @Service
 public class DeliveryAddressService implements IDeliveryAddressService {
