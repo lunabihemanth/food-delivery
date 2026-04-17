@@ -1,6 +1,8 @@
 package com.sprint.food_delivery.CustomersModule.Customers;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,37 +19,74 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
 
+    // helper method to build response
+    private Map<String, Object> buildResponse(int status, String message, Object data) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", status);
+        response.put("message", message);
+        response.put("data", data);
+        response.put("timestamp", LocalDateTime.now());
+        return response;
+    }
+
+    // CREATE
     @PostMapping("/add")
-    public ResponseEntity<Customers> save(@Valid @RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(customerDTO));
+    public ResponseEntity<Map<String, Object>> save(
+            @Valid @RequestBody CustomerRequestDTO customerDTO) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(buildResponse(201, "Customer created successfully",
+                        customerService.save(customerDTO)));
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Customers>> getAll() {
-        return ResponseEntity.ok(customerService.getAll());
+    // GET ALL
+    @GetMapping("/getall")
+    public ResponseEntity<Map<String, Object>> getAll() {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Customers fetched successfully",
+                        customerService.getAll())
+        );
     }
 
-    @GetMapping("/findbyid/{id}")
-    public ResponseEntity<Customers> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(customerService.findById(id));
+    // GET BY ID
+    @GetMapping("/{customerId}")
+    public ResponseEntity<Map<String, Object>> findById(
+            @PathVariable Integer customerId) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Customer fetched successfully",
+                        customerService.findById(customerId))
+        );
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Customers> update(@PathVariable Integer id,
-                                            @Valid @RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.update(id, customerDTO));
+    // UPDATE
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Map<String, Object>> update(
+            @PathVariable Integer customerId,
+            @Valid @RequestBody CustomerRequestDTO customerDTO) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Customer updated successfully",
+                        customerService.update(customerId, customerDTO))
+        );
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        customerService.delete(id);
-        return ResponseEntity.noContent().build();
+    // DELETE
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<Map<String, Object>> delete(
+            @PathVariable Integer customerId) {
+
+        customerService.delete(customerId);
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Customer deleted successfully", null)
+        );
     }
 }
-

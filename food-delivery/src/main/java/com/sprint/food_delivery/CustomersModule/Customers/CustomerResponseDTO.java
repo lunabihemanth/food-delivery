@@ -1,29 +1,19 @@
 package com.sprint.food_delivery.CustomersModule.Customers;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class CustomerResponseDTO {
 
-@Entity
-@Table(name = "customers")
-public class Customers {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
     private Integer customerId;
-
-    @Column(name = "customer_name", nullable = false)
     private String customerName;
-
-    @Column(name = "customer_email", unique = true, nullable = false)
     private String customerEmail;
-
-    @Column(name = "customer_phone", nullable = false)
     private String customerPhone;
+
+    public CustomerResponseDTO(Integer customerId, String customerName,
+                               String customerEmail, String customerPhone) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
+    }
 
     public Integer getCustomerId() {
         return customerId;
@@ -56,4 +46,6 @@ public class Customers {
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
+
+    
 }

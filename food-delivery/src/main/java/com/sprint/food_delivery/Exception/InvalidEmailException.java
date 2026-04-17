@@ -1,0 +1,9 @@
+package com.sprint.food_delivery.Exception;
+
+
+    public class InvalidEmailException extends RuntimeException {
+    public InvalidEmailException(String message) {
+        super(message);
+    }
+}
+
