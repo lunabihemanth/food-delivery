@@ -1,29 +1,19 @@
 package com.sprint.food_delivery.DeliveryModule.DeliveryDrivers;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+public class DeliveryDriverResponseDTO {
 
-@Entity
-@Table(name = "delivery_drivers")
-public class DeliveryDrivers {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "driver_id")
     private Integer driverId;
-
-    @NotBlank(message = "Driver name cannot be empty")
-    @Column(name = "driver_name")
     private String driverName;
-
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
-    @Column(name = "driver_phone")
     private String driverPhone;
-
-    @Column(name = "driver_vehicle")
     private String driverVehicle;
 
+    public DeliveryDriverResponseDTO(Integer driverId, String driverName,
+                                     String driverPhone, String driverVehicle) {
+        this.driverId = driverId;
+        this.driverName = driverName;
+        this.driverPhone = driverPhone;
+        this.driverVehicle = driverVehicle;
+    }
 
     public Integer getDriverId() {
         return driverId;

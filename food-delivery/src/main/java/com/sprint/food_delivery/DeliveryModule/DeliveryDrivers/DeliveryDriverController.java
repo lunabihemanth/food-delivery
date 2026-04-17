@@ -1,72 +1,78 @@
 package com.sprint.food_delivery.DeliveryModule.DeliveryDrivers;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/drivers")
+@RequestMapping("/delivery-drivers")
 public class DeliveryDriverController {
 
     @Autowired
-    private DeliveryDriversService driverService;
+    private IDeliveryDriverService service;
+
+    private Map<String, Object> buildResponse(int status, String message, Object data) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", status);
+        response.put("message", message);
+        response.put("data", data);
+        response.put("timestamp", LocalDateTime.now());
+        return response;
+    }
 
     @PostMapping("/add")
-    public DeliveryDrivers save(@Valid @RequestBody DeliveryDrivers driver) {
-        return driverService.save(driver);
+    public ResponseEntity<Map<String, Object>> save(
+            @Valid @RequestBody DeliveryDriverRequestDTO dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(buildResponse(201, "Driver created successfully",
+                        service.save(dto)));
     }
 
-  
-    @GetMapping
-    public List<DeliveryDrivers> getAll() {
-        return driverService.getAll();
+    @GetMapping("/getall")
+    public ResponseEntity<Map<String, Object>> getAll() {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Drivers fetched successfully",
+                        service.getAll())
+        );
     }
 
-  
     @GetMapping("/{id}")
-    public DeliveryDrivers findById(@PathVariable Integer id) {
-        return driverService.findById(id);
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable Integer id) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Driver fetched successfully",
+                        service.findById(id))
+        );
     }
 
     
     @PutMapping("/{id}")
-    public DeliveryDrivers update(@PathVariable Integer id, @RequestBody DeliveryDrivers driver) {
-        return driverService.update(id, driver);
+    public ResponseEntity<Map<String, Object>> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody DeliveryDriverRequestDTO dto) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "Driver updated successfully",
+                        service.update(id, dto))
+        );
     }
 
-    
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        driverService.delete(id);
-    }
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Integer id) {
 
-  
-    @PutMapping("/assign/{orderId}/{driverId}")
-    public String assignDriver(@PathVariable Integer orderId, @PathVariable Integer driverId) {
-        return driverService.assignDriverToOrder(orderId, driverId);
-    }
+        service.delete(id);
 
-    
-    @GetMapping("/{driverId}/orders")
-    public List<Orders> getOrdersByDriver(@PathVariable Integer driverId) {
-        return driverService.getOrdersByDriver(driverId);
-    }
-
-    
-    @PutMapping("/status/{orderId}")
-    public String updateStatus(@PathVariable Integer orderId, @RequestBody String status) {
-        return driverService.updateDeliveryStatus(orderId, status);
+        return ResponseEntity.ok(
+                buildResponse(200, "Driver deleted successfully", null)
+        );
     }
 }
