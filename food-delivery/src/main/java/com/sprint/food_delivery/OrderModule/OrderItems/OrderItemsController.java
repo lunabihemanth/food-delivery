@@ -1,37 +1,85 @@
 package com.sprint.food_delivery.OrderModule.OrderItems;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/order-items")
+@RequestMapping("/orderitems")
 public class OrderItemsController {
 
     @Autowired
-    private OrderItemsService service;
+    private IOrderItemsService service;
 
-    @PostMapping
-    public OrderItems createItem(@Valid @RequestBody OrderItems item) {
-        return service.saveOrderItem(item);
+    
+    private Map<String, Object> buildResponse(int status, String message, Object data) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", status);
+        response.put("message", message);
+        response.put("data", data);
+        response.put("timestamp", LocalDateTime.now());
+        return response;
     }
 
-    @GetMapping
-    public List<OrderItems> getAllItems() {
-        return service.getAllItems();
+  
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, Object>> save(
+            @Valid @RequestBody OrderItemsRequestDTO dto) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(buildResponse(201, "OrderItem created successfully",
+                        service.save(dto)));
     }
 
+
+    @GetMapping("/getall")
+    public ResponseEntity<Map<String, Object>> getAll() {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "OrderItems fetched successfully",
+                        service.getAll())
+        );
+    }
+
+ 
     @GetMapping("/{id}")
-    public OrderItems getItem(@PathVariable Integer id) {
-        return service.getItemById(id);
+    public ResponseEntity<Map<String, Object>> findById(
+            @PathVariable Integer id) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "OrderItem fetched successfully",
+                        service.findById(id))
+        );
     }
 
+ 
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody OrderItemsRequestDTO dto) {
+
+        return ResponseEntity.ok(
+                buildResponse(200, "OrderItem updated successfully",
+                        service.update(id, dto))
+        );
+    }
+
+ 
     @DeleteMapping("/{id}")
-    public String deleteItem(@PathVariable Integer id) {
-        service.deleteItem(id);
-        return "Item deleted successfully";
+    public ResponseEntity<Map<String, Object>> delete(
+            @PathVariable Integer id) {
+
+        service.delete(id);
+
+        return ResponseEntity.ok(
+                buildResponse(200, "OrderItem deleted successfully", null)
+        );
     }
 }
