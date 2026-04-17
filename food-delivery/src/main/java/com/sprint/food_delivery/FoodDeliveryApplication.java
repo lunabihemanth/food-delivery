@@ -11,6 +11,6 @@ public class FoodDeliveryApplication {
 	}
 	
 	
-	//applicationfile
+	//applicationfile.java
 
 }
