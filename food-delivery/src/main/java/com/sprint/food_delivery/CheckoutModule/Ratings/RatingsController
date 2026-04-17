@@ -1,0 +1,47 @@
+package com.sprint.food_delivery.CheckoutModule.Ratings;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/ratings")
+public class RatingsController {
+
+    @Autowired
+    private IRatingsService ratingsService;
+
+    @PostMapping("/orders/{orderId}/ratings")
+    public ResponseEntity<Ratings> submitRating(
+            @PathVariable Integer orderId,
+            @Valid @RequestBody RatingDTO ratingDTO) {
+
+        Ratings rating = new Ratings();
+        rating.setRatingValue(ratingDTO.getRating());  // ✅ FIXED
+        rating.setReview(ratingDTO.getReview());
+
+        Ratings savedRating = ratingsService.saveForOrder(orderId, rating);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedRating);
+    }
+
+    @GetMapping("/restaurants/{restaurantId}/ratings")
+    public ResponseEntity<List<Ratings>> getRestaurantRatings(@PathVariable Integer restaurantId) {
+        return ResponseEntity.ok(ratingsService.getByRestaurant(restaurantId));
+    }
+
+    @GetMapping("/{ratingId}")
+    public ResponseEntity<Ratings> getRating(@PathVariable Integer ratingId) {
+        return ResponseEntity.ok(ratingsService.findById(ratingId));
+    }
+
+    @DeleteMapping("/{ratingId}")
+    public ResponseEntity<Void> deleteRating(@PathVariable Integer ratingId) {
+        ratingsService.delete(ratingId);
+        return ResponseEntity.noContent().build();
+    }
+}
