@@ -1,6 +1,7 @@
- package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
 import com.sprint.food_delivery.Exception.CustomerNotFoundException;
+import com.sprint.food_delivery.Exception.DeliveryAddressNotFoundException;
 
 @Service
 public class DeliveryAddressService implements IDeliveryAddressService {
@@ -16,10 +18,12 @@ public class DeliveryAddressService implements IDeliveryAddressService {
     private DeliveryAddressRepository deliveryAddressRepository;
 
     @Autowired
-    private CustomerRepository customerRepository; // to validate customer exists
+    private CustomerRepository customerRepository;
 
+    // CREATE
     @Override
-    public DeliveryAddress save(DeliveryAddressDTO dto) {
+    public DeliveryAddressResponseDTO save(DeliveryAddressRequestDTO dto) {
+
         Customers customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.getCustomerId()));
 
@@ -31,30 +35,47 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         address.setPostalCode(dto.getPostalCode());
         address.setCustomer(customer);
 
-        return deliveryAddressRepository.save(address);
+        DeliveryAddress saved = deliveryAddressRepository.save(address);
+
+        return mapToResponseDTO(saved);
     }
 
+    // GET ALL
     @Override
-    public List<DeliveryAddress> getAll() {
-        return deliveryAddressRepository.findAll();
+    public List<DeliveryAddressResponseDTO> getAll() {
+        return deliveryAddressRepository.findAll()
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
     }
 
+    // GET BY ID
     @Override
-    public DeliveryAddress getById(Integer id) {
-        return deliveryAddressRepository.findById(id)
+    public DeliveryAddressResponseDTO findById(Integer id) {
+        DeliveryAddress address = deliveryAddressRepository.findById(id)
                 .orElseThrow(() -> new DeliveryAddressNotFoundException(id));
+
+        return mapToResponseDTO(address);
     }
 
+    // GET BY CUSTOMER ID
     @Override
-    public List<DeliveryAddress> getByCustomerId(Integer customerId) {
+    public List<DeliveryAddressResponseDTO> getByCustomerId(Integer customerId) {
+
         if (!customerRepository.existsById(customerId)) {
             throw new CustomerNotFoundException(customerId);
         }
-        return deliveryAddressRepository.findByCustomer_CustomerId(customerId);
+
+        return deliveryAddressRepository.findByCustomer_CustomerId(customerId)
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
     }
 
+    // UPDATE
     @Override
-    public DeliveryAddress update(Integer id, DeliveryAddressDTO dto) {
+    public DeliveryAddressResponseDTO update(Integer id, DeliveryAddressRequestDTO dto) {
+
         DeliveryAddress existing = deliveryAddressRepository.findById(id)
                 .orElseThrow(() -> new DeliveryAddressNotFoundException(id));
 
@@ -68,14 +89,30 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         existing.setPostalCode(dto.getPostalCode());
         existing.setCustomer(customer);
 
-        return deliveryAddressRepository.save(existing);
+        DeliveryAddress updated = deliveryAddressRepository.save(existing);
+
+        return mapToResponseDTO(updated);
     }
 
+    // DELETE
     @Override
     public void delete(Integer id) {
         if (!deliveryAddressRepository.existsById(id)) {
             throw new DeliveryAddressNotFoundException(id);
         }
         deliveryAddressRepository.deleteById(id);
+    }
+
+    // 🔁 MAPPER METHOD (clean reuse)
+    private DeliveryAddressResponseDTO mapToResponseDTO(DeliveryAddress address) {
+        return new DeliveryAddressResponseDTO(
+                address.getAddressId(),
+                address.getAddressLine1(),
+                address.getAddressLine2(),
+                address.getCity(),
+                address.getState(),
+                address.getPostalCode(),
+                address.getCustomer().getCustomerId()
+        );
     }
 }

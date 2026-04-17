@@ -11,8 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressNotFoundException;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

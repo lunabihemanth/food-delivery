@@ -1,22 +1,77 @@
 package com.sprint.food_delivery.DeliveryModule.DeliveryDrivers;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
-public interface DeliveryDriversService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-     DeliveryDrivers save(DeliveryDrivers driver);
+@Service
+public class DeliveryDriversService implements IDeliveryDriversService {
 
-    List<DeliveryDrivers> getAll();
+    @Autowired
+    private DeliveryDriversRepository repository;
 
-    DeliveryDrivers findById(Integer id);
+    // CREATE
+    @Override
+    public DeliveryDriversResponseDTO save(DeliveryDriversRequestDTO dto) {
 
-    DeliveryDrivers update(Integer id, DeliveryDrivers driver);
+        if (repository.existsByDriverPhone(dto.getDriverPhone())) {
+            throw new RuntimeException("Driver already exists");
+        }
 
-    void delete(Integer id);
+        DeliveryDrivers d = new DeliveryDrivers();
+        d.setDriverName(dto.getDriverName());
+        d.setDriverPhone(dto.getDriverPhone());
+        d.setDriverVehicle(dto.getDriverVehicle());
 
-    String assignDriverToOrder(Integer orderId, Integer driverId);
+        return map(repository.save(d));
+    }
 
-    List<Orders> getOrdersByDriver(Integer driverId);
+    // GET ALL
+    @Override
+    public List<DeliveryDriversResponseDTO> getAll() {
+        return repository.findAll().stream().map(this::map).collect(Collectors.toList());
+    }
 
-    String updateDeliveryStatus(Integer orderId, String status);
+    // GET BY ID
+    @Override
+    public DeliveryDriversResponseDTO findById(Integer id) {
+        return map(repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Driver not found")));
+    }
+
+    // UPDATE
+    @Override
+    public DeliveryDriversResponseDTO update(Integer id, DeliveryDriversRequestDTO dto) {
+
+        DeliveryDrivers existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+
+        existing.setDriverName(dto.getDriverName());
+        existing.setDriverPhone(dto.getDriverPhone());
+        existing.setDriverVehicle(dto.getDriverVehicle());
+
+        return map(repository.save(existing));
+    }
+
+    // DELETE
+    @Override
+    public void delete(Integer id) {
+
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Driver not found");
+        }
+
+        repository.deleteById(id);
+    }
+
+    private DeliveryDriversResponseDTO map(DeliveryDrivers d) {
+        return new DeliveryDriversResponseDTO(
+                d.getDriverId(),
+                d.getDriverName(),
+                d.getDriverPhone(),
+                d.getDriverVehicle()
+        );
+    }
 }

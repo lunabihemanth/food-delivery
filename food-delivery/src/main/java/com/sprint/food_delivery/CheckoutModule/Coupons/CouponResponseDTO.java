@@ -2,29 +2,22 @@ package com.sprint.food_delivery.CheckoutModule.Coupons;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class CouponResponseDTO {
 
-@Entity
-@Table(name = "coupons")
-public class Coupons {
-
-    @Id
-    @Column(name = "coupon_id")
     private Integer couponId;
-
-    @Column(name = "coupon_code", unique = true)
     private String couponCode;
-
-    @Column(name = "discount_amount")
     private Double discountAmount;
-
-    @Column(name = "expiry_date")
     private LocalDate expiryDate;
 
-
+    public CouponResponseDTO(Integer couponId,
+                             String couponCode,
+                             Double discountAmount,
+                             LocalDate expiryDate) {
+        this.couponId = couponId;
+        this.couponCode = couponCode;
+        this.discountAmount = discountAmount;
+        this.expiryDate = expiryDate;
+    }
 
     public Integer getCouponId() {
         return couponId;

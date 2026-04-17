@@ -9,10 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "menu_items")
 public class MenuItems {
 
     @Id
@@ -20,19 +20,20 @@ public class MenuItems {
     @Column(name = "item_id")
     private Integer itemId;
 
-    @NotBlank(message = "Item name cannot be empty")
+    @Column(name = "item_name")
     private String itemName;
 
-    @NotBlank(message = "Description is required")
-    private String description;
+    @Column(name = "item_description")
+    private String itemDescription;
 
-    @NotNull(message = "Price is required")
-    private Double price;
+    @Column(name = "item_price")
+    private Double itemPrice;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    @NotNull(message = "Restaurant is required")
     private Restaurants restaurant;
+
+    // getters & setters
 
     public Integer getItemId() {
         return itemId;
@@ -50,12 +51,20 @@ public class MenuItems {
         this.itemName = itemName;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getItemDescription() {
+        return itemDescription;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public Double getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(Double itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
     public Restaurants getRestaurant() {
@@ -65,13 +74,4 @@ public class MenuItems {
     public void setRestaurant(Restaurants restaurant) {
         this.restaurant = restaurant;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 }

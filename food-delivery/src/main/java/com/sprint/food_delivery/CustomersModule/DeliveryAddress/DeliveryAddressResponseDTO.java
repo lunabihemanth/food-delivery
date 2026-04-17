@@ -1,43 +1,30 @@
 package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
 
-import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+public class DeliveryAddressResponseDTO {
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "delivery_addresses")
-public class DeliveryAddress {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
     private Integer addressId;
-
-    @Column(name = "address_line1", nullable = false)
     private String addressLine1;
-
-    @Column(name = "address_line2")
     private String addressLine2;
-
-    @Column(name = "city", nullable = false)
     private String city;
-
-    @Column(name = "state", nullable = false)
     private String state;
-
-    @Column(name = "postal_code", nullable = false)
     private String postalCode;
+    private Integer customerId;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customers customer;
+    public DeliveryAddressResponseDTO(Integer addressId,
+                                      String addressLine1,
+                                      String addressLine2,
+                                      String city,
+                                      String state,
+                                      String postalCode,
+                                      Integer customerId) {
+        this.addressId = addressId;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.customerId = customerId;
+    }
 
     public Integer getAddressId() {
         return addressId;
@@ -87,11 +74,11 @@ public class DeliveryAddress {
         this.postalCode = postalCode;
     }
 
-    public Customers getCustomer() {
-        return customer;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customers customer) {
-        this.customer = customer;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 }
