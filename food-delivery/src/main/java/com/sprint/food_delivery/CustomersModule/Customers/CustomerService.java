@@ -86,7 +86,5 @@ public class CustomerService implements ICustomerService {
             throw new RuntimeException("Customer not found");
         }
         customerRepository.deleteById(id);
-    }
-
-    
+    }    
 }
