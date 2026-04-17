@@ -58,7 +58,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return mapToResponseDTO(address);
     }
 
-    // GET BY CUSTOMER ID
+    // Get by Customer Id
     @Override
     public List<DeliveryAddressResponseDTO> getByCustomerId(Integer customerId) {
 
@@ -72,7 +72,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
                 .collect(Collectors.toList());
     }
 
-    // UPDATE
+    // Update
     @Override
     public DeliveryAddressResponseDTO update(Integer id, DeliveryAddressRequestDTO dto) {
 
@@ -94,16 +94,18 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return mapToResponseDTO(updated);
     }
 
-    // DELETE
+    // Delete
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         if (!deliveryAddressRepository.existsById(id)) {
             throw new DeliveryAddressNotFoundException(id);
         }
         deliveryAddressRepository.deleteById(id);
+        
+        return "Deleted this id";
     }
 
-    // 🔁 MAPPER METHOD (clean reuse)
+    //Mapper Method
     private DeliveryAddressResponseDTO mapToResponseDTO(DeliveryAddress address) {
         return new DeliveryAddressResponseDTO(
                 address.getAddressId(),

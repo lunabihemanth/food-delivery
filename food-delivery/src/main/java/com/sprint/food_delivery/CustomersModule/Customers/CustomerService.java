@@ -13,7 +13,7 @@ public class CustomerService implements ICustomerService {
     private CustomerRepository customerRepository;
 
 
-    // CREATE
+    // Create
 
     @Override
     public CustomerResponseDTO save(CustomerRequestDTO dto) {
@@ -81,10 +81,12 @@ public class CustomerService implements ICustomerService {
 
     // DELETE
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         if (!customerRepository.existsById(id)) {
             throw new RuntimeException("Customer not found");
         }
         customerRepository.deleteById(id);
+        
+        return "Deleted this id : "+id ;
     }    
 }

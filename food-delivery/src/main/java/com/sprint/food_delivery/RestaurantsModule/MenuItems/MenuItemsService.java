@@ -78,8 +78,9 @@ public class MenuItemsService implements IMenuItemsService {
 
     // DELETE
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         repository.deleteById(id);
+        return "Deleted this id: "+id;
     }
 
     // MAPPER

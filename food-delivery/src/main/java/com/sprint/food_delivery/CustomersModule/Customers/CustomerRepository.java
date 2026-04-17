@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface CustomerRepository extends JpaRepository<Customers, Integer> {
 
-    // DERIVED QUERIES (MOST USED)
+    // Derived Queries
 
     // Check if email already exists (for validation)
     boolean existsByCustomerEmail(String customerEmail);
+    
     // Find customer by email
     Optional<Customers> findByCustomerEmail(String customerEmail);
 

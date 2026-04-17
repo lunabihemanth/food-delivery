@@ -21,7 +21,7 @@ public class OrdersCouponsService implements IOrdersCouponsService {
     @Autowired
     private CouponsRepository couponsRepository;
 
-    // ✅ APPLY COUPON (NO VALIDATION)
+    //Apply Coupon
     @Override
     public OrdersCouponsResponseDTO applyCoupon(OrdersCouponsRequestDTO dto) {
 
@@ -43,7 +43,7 @@ public class OrdersCouponsService implements IOrdersCouponsService {
         return map(saved);
     }
 
-    // ✅ GET ALL COUPONS FOR ORDER
+    // GET ALL COUPONS FOR ORDER
     @Override
     public List<OrdersCouponsResponseDTO> getCouponsByOrderId(Integer orderId) {
 
@@ -53,16 +53,17 @@ public class OrdersCouponsService implements IOrdersCouponsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ REMOVE COUPON
+    //  REMOVE COUPON
     @Override
-    public void removeCoupon(Integer orderId, Integer couponId) {
+    public String removeCoupon(Integer orderId, Integer couponId) {
 
         OrdersCouponsId id = new OrdersCouponsId(orderId, couponId);
 
         ordersCouponsRepository.deleteById(id);
+        return "Coupon id removed";
     }
 
-    // 🔁 MAPPER
+    //  MAPPER
     private OrdersCouponsResponseDTO map(OrdersCoupons oc) {
         return new OrdersCouponsResponseDTO(
                 oc.getOrder().getOrderId(),

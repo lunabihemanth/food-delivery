@@ -14,5 +14,5 @@ public interface IDeliveryAddressService {
 
     DeliveryAddressResponseDTO update(Integer id, DeliveryAddressRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }

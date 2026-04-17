@@ -5,6 +5,8 @@ import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,6 +18,7 @@ public class Ratings {
 
     @Id
     @Column(name = "rating_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ratingId;
 
     @ManyToOne
@@ -32,7 +35,6 @@ public class Ratings {
     @Column(name = "review")
     private String review;
 
-    // getters & setters
 
     public Integer getRatingId() {
         return ratingId;

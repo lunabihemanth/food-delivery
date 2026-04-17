@@ -11,6 +11,8 @@ import com.sprint.food_delivery.OrderModule.Orders.OrdersRepository;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
 import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class RatingsService implements IRatingsService {
 
@@ -23,7 +25,7 @@ public class RatingsService implements IRatingsService {
     @Autowired
     private RestaurantsRepository restaurantsRepository;
 
-    // ✅ CREATE
+    //Create
     @Override
     public RatingsResponseDTO save(RatingsRequestDTO dto) {
 
@@ -39,12 +41,10 @@ public class RatingsService implements IRatingsService {
         rating.setRating(dto.getRating());
         rating.setReview(dto.getReview());
 
-        Ratings saved = ratingsRepository.save(rating);
-
-        return map(saved);
+        return map(ratingsRepository.save(rating));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<RatingsResponseDTO> getAll() {
         return ratingsRepository.findAll()
@@ -53,7 +53,7 @@ public class RatingsService implements IRatingsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public RatingsResponseDTO findById(Integer ratingId) {
 
@@ -63,7 +63,7 @@ public class RatingsService implements IRatingsService {
         return map(rating);
     }
 
-    // ✅ GET BY RESTAURANT
+    // GET BY RESTAURANT
     @Override
     public List<RatingsResponseDTO> getByRestaurantId(Integer restaurantId) {
 
@@ -73,7 +73,23 @@ public class RatingsService implements IRatingsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ UPDATE
+    // CUSTOM: HIGH RATINGS
+    @Override
+    public List<RatingsResponseDTO> getHighRatings(Integer restaurantId, double rating) {
+
+        return ratingsRepository.findHighRatingsByRestaurant(restaurantId, rating)
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
+    }
+
+    // CUSTOM: AVERAGE RATING
+    @Override
+    public Double getAverageRating(Integer restaurantId) {
+        return ratingsRepository.getAverageRatingByRestaurant(restaurantId);
+    }
+
+    // UPDATE (FULL ENTITY)
     @Override
     public RatingsResponseDTO update(Integer ratingId, RatingsRequestDTO dto) {
 
@@ -91,19 +107,36 @@ public class RatingsService implements IRatingsService {
         existing.setRating(dto.getRating());
         existing.setReview(dto.getReview());
 
-        Ratings updated = ratingsRepository.save(existing);
-
-        return map(updated);
+        return map(ratingsRepository.save(existing));
     }
 
-    // ✅ DELETE
+    // UPDATE (USING CUSTOM QUERY)
     @Override
-    public void delete(Integer ratingId) {
+    @Transactional
+    public String updateRatingValue(Integer ratingId, double rating) {
+
+        int updatedRows = ratingsRepository.updateRatingValue(ratingId, rating);
+
+        if (updatedRows == 0) {
+            throw new RuntimeException("Rating not found");
+        }
+
+        return "Rating updated successfully for ID: " + ratingId;
+    }
+
+    // DELETE
+    @Override
+    public String delete(Integer ratingId) {
+
+        if (!ratingsRepository.existsById(ratingId)) {
+            throw new RuntimeException("Rating not found");
+        }
 
         ratingsRepository.deleteById(ratingId);
+        return "Deleted rating with ID: " + ratingId;
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private RatingsResponseDTO map(Ratings rating) {
         return new RatingsResponseDTO(
                 rating.getRatingId(),

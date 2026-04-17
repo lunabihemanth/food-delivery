@@ -13,6 +13,7 @@ public interface DeliveryAddressRepository extends JpaRepository<DeliveryAddress
     // DERIVED QUERY
     List<DeliveryAddress> findByCustomer_CustomerId(Integer customerId);
 
+    
     // CUSTOM SELECT QUERY
 
     // Search addresses by city

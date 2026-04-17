@@ -14,6 +14,10 @@ public class MenuItemsRequestDTO {
     @NotNull(message = "Price cannot be null")
     @Min(value = 1, message = "Price must be greater than 0")
     private Double itemPrice;
+    
+
+    @NotNull(message = "Restaurant ID cannot be null")
+    private Integer restaurantId;
 
     public String getItemName() {
         return itemName;
@@ -47,8 +51,6 @@ public class MenuItemsRequestDTO {
         this.restaurantId = restaurantId;
     }
 
-    @NotNull(message = "Restaurant ID cannot be null")
-    private Integer restaurantId;
 
-    // getters & setters
+ 
 }

@@ -12,9 +12,9 @@ import jakarta.validation.constraints.NotNull;
 public class OrderItems {
 
 	@Id
-	@Column(name = "order_item_id")
+    @Column(name = "order_item_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer orderItemId;
+    private Integer orderItemId;
 
 	@NotNull
 	@Min(value = 1, message = "Quantity must be atleast 1.")

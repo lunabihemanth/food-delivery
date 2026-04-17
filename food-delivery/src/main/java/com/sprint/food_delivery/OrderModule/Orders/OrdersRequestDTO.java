@@ -48,5 +48,4 @@ public class OrdersRequestDTO {
         this.orderStatus = orderStatus;
     }
 
-    // getters & setters
 }

@@ -13,5 +13,5 @@ public interface ICustomerService {
 
     CustomerResponseDTO update(Integer id, CustomerRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }

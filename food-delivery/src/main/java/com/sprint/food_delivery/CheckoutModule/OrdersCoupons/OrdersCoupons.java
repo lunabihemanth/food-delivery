@@ -27,7 +27,6 @@ public class OrdersCoupons {
     @JoinColumn(name = "coupon_id")
     private Coupons coupon;
 
-    // getters & setters
 
     public OrdersCouponsId getId() {
         return id;

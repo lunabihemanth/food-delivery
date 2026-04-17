@@ -8,5 +8,5 @@ public interface IOrdersCouponsService {
 
     List<OrdersCouponsResponseDTO> getCouponsByOrderId(Integer orderId);
 
-    void removeCoupon(Integer orderId, Integer couponId);
+    String removeCoupon(Integer orderId, Integer couponId);
 }

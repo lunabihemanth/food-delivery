@@ -74,16 +74,17 @@ public class CouponService implements ICouponService {
 
     // DELETE
     @Override
-    public void delete(Integer couponId) {
+    public String delete(Integer couponId) {
 
         if (!couponRepository.existsById(couponId)) {
             throw new RuntimeException("Coupon not found");
         }
 
         couponRepository.deleteById(couponId);
+        return "Deleted this id"+couponId;
     }
 
-    // 🔁 MAPPER METHOD
+    // MAPPER METHOD
     private CouponResponseDTO mapToDTO(Coupons coupon) {
         return new CouponResponseDTO(
                 coupon.getCouponId(),

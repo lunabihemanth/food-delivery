@@ -81,7 +81,7 @@ public class DeliveryAddressController {
         );
     }
 
-    // DELETE ADDRESS
+    // Delete Address
     @DeleteMapping("/addresses/{addressId}")
     public ResponseEntity<Map<String, Object>> delete(
             @PathVariable Integer addressId) {

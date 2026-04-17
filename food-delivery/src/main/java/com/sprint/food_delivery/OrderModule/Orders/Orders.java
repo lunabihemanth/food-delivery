@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 public class Orders {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ IMPORTANT FIX
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "order_id")
     private Integer orderId;
 
@@ -42,7 +42,7 @@ public class Orders {
     @Column(name = "order_status")
     private String orderStatus;
 
-    // 🔽 GETTERS & SETTERS
+
 
     public Integer getOrderId() {
         return orderId;

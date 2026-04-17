@@ -11,20 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface DeliveryDriversRepository extends JpaRepository<DeliveryDrivers, Integer> {
 
-    // ✅ Derived
+    //  Derived
     boolean existsByDriverPhone(String driverPhone);
 
     Optional<DeliveryDrivers> findByDriverPhone(String driverPhone);
 
-    // ------------------------------
 
-    // ✅ Custom SELECT
+    // Custom SELECT
     @Query("SELECT d FROM DeliveryDrivers d WHERE LOWER(d.driverName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<DeliveryDrivers> searchByName(@Param("name") String name);
 
-    // ------------------------------
+  
 
-    // ✅ Custom MODIFY
+    // Custom MODIFY
     @Modifying
     @Transactional
     @Query("UPDATE DeliveryDrivers d SET d.driverVehicle = :vehicle WHERE d.driverId = :id")
