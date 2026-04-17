@@ -12,7 +12,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
     @Autowired
     private DeliveryDriversRepository repository;
 
-    // CREATE
+    // Create
     @Override
     public DeliveryDriversResponseDTO save(DeliveryDriversRequestDTO dto) {
 
@@ -28,7 +28,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return map(repository.save(d));
     }
 
-    // GET ALL
+    // Get all
     @Override
     public List<DeliveryDriversResponseDTO> getAll() {
         return repository.findAll().stream().map(this::map).collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
                 .orElseThrow(() -> new RuntimeException("Driver not found")));
     }
 
-    // UPDATE
+    // Update
     @Override
     public DeliveryDriversResponseDTO update(Integer id, DeliveryDriversRequestDTO dto) {
 
@@ -55,15 +55,17 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return map(repository.save(existing));
     }
 
-    // DELETE
+    // Delete
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
 
         if (!repository.existsById(id)) {
             throw new RuntimeException("Driver not found");
         }
 
         repository.deleteById(id);
+        
+        return "Deleted this id : "+id;
     }
 
     private DeliveryDriversResponseDTO map(DeliveryDrivers d) {

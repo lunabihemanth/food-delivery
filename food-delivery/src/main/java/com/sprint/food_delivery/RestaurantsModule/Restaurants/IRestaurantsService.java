@@ -12,5 +12,5 @@ public interface IRestaurantsService {
 
     RestaurantResponseDTO update(Integer id, RestaurantsRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }

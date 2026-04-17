@@ -28,7 +28,7 @@ public class CouponController {
         return response;
     }
 
-    // ✅ CREATE COUPON
+    //  Create the Coupon
     @PostMapping
     public ResponseEntity<Map<String, Object>> createCoupon(
             @Valid @RequestBody CouponRequestDTO dto) {
@@ -38,7 +38,7 @@ public class CouponController {
                         couponService.save(dto)));
     }
 
-    // ✅ GET ALL COUPONS
+    //  Get all the Coupons
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAllCoupons() {
 
@@ -48,7 +48,7 @@ public class CouponController {
         );
     }
 
-    // ✅ VALIDATE COUPON (BY CODE)
+    //  Validate the Coupon
     @GetMapping("/{couponCode}")
     public ResponseEntity<Map<String, Object>> validateCoupon(
             @PathVariable String couponCode) {
@@ -59,7 +59,7 @@ public class CouponController {
         );
     }
 
-    // ✅ UPDATE COUPON
+    // Update the Coupon
     @PutMapping("/{couponId}")
     public ResponseEntity<Map<String, Object>> updateCoupon(
             @PathVariable Integer couponId,
@@ -71,7 +71,7 @@ public class CouponController {
         );
     }
 
-    // ✅ DELETE COUPON
+    // Delete Coupon
     @DeleteMapping("/{couponId}")
     public ResponseEntity<Map<String, Object>> deleteCoupon(
             @PathVariable Integer couponId) {

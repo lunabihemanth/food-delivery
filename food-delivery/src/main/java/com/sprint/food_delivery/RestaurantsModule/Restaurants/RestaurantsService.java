@@ -52,15 +52,21 @@ public class RestaurantsService implements IRestaurantsService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Restaurant not found");
         }
         repository.deleteById(id);
+        
+        return "Deleted this id: "+id;
     }
 
     private RestaurantResponseDTO map(Restaurants r) {
         return new RestaurantResponseDTO(
+            r.getRestaurantId(),
+            r.getRestaurantName(),
+            r.getRestaurantAddress(),
+            r.getRestaurantPhone()
         );
     }
 }

@@ -70,5 +70,5 @@ public class OrdersResponseDTO {
         this.orderStatus = orderStatus;
     }
 
-    // getters
+ 
 }

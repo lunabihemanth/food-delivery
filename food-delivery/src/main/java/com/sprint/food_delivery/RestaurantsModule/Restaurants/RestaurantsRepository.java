@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface RestaurantsRepository extends JpaRepository<Restaurants, Integer> {
 
-    // ✅ Derived
+    //  Derived
     boolean existsByRestaurantName(String restaurantName);
 
     Optional<Restaurants> findByRestaurantName(String restaurantName);
 
-    // ✅ Custom SELECT
+    //  Custom SELECT Query
     @Query("SELECT r FROM Restaurants r WHERE LOWER(r.restaurantName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Restaurants> searchByName(@Param("name") String name);
 
-    // ✅ Custom MODIFY
+    //  Custom MODIFY Query
     @Modifying
     @Transactional
     @Query("UPDATE Restaurants r SET r.restaurantName = :name, r.restaurantAddress = :address, r.restaurantPhone = :phone WHERE r.restaurantId = :id")

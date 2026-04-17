@@ -8,18 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
-    // ✅ Derived
+	//derived
     List<Orders> findByCustomer_CustomerId(Integer customerId);
 
-    // --------------------------------------------
 
-    // ✅ Custom SELECT
+    //custom Query
     @Query("SELECT o FROM Orders o WHERE o.orderStatus = :status")
     List<Orders> findByStatus(@Param("status") String status);
 
-    // --------------------------------------------
-
-    // ✅ Custom MODIFY
+    //update Query
     @Modifying
     @Transactional
     @Query("UPDATE Orders o SET o.orderStatus = :status WHERE o.orderId = :id")

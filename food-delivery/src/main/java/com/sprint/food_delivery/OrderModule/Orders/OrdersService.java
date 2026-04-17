@@ -83,11 +83,13 @@ public class OrdersService implements IOrdersService {
 
     // DELETE
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Order not found");
         }
         repository.deleteById(id);
+        
+        return "Deleted";
     }
 
     private OrdersResponseDTO map(Orders o) {

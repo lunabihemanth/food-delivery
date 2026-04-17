@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class DeliveryDrivers {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ important
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "driver_id")
     private Integer driverId;
 
@@ -25,7 +25,7 @@ public class DeliveryDrivers {
     @Column(name = "driver_vehicle")
     private String driverVehicle;
 
-    // getters & setters
+
 
     public Integer getDriverId() {
         return driverId;

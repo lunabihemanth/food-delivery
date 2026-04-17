@@ -12,5 +12,5 @@ public interface IDeliveryDriversService {
 
     DeliveryDriversResponseDTO update(Integer id, DeliveryDriversRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }

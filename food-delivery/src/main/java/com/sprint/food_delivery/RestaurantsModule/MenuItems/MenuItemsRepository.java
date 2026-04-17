@@ -10,18 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface MenuItemsRepository extends JpaRepository<MenuItems, Integer> {
 
-    // ✅ DERIVED QUERY
+    // DERIVED QUERY
     List<MenuItems> findByRestaurant_RestaurantId(Integer restaurantId);
 
-    // ------------------------------
 
-    // ✅ CUSTOM SELECT QUERY
+
+    // CUSTOM SELECT QUERY
     @Query("SELECT m FROM MenuItems m WHERE LOWER(m.itemName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<MenuItems> searchByItemName(@Param("name") String name);
 
-    // ------------------------------
+ 
 
-    // ✅ CUSTOM MODIFY QUERY
+    // CUSTOM MODIFY QUERY
     @Modifying
     @Transactional
     @Query("UPDATE MenuItems m SET m.itemPrice = :price WHERE m.itemId = :id")

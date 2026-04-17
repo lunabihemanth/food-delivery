@@ -14,5 +14,5 @@ public interface IMenuItemsService {
 
     MenuItemsResponseDTO update(Integer id, MenuItemsRequestDTO dto);
 
-    void delete(Integer id);
+    String delete(Integer id);
 }
