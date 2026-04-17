@@ -25,8 +25,6 @@ public class Restaurants {
     @Column(name = "restaurant_phone")
     private String restaurantPhone;
 
-    // Getters and Setters
-
     public Integer getRestaurantId() {
         return restaurantId;
     }
