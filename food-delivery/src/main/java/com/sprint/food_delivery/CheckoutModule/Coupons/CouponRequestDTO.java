@@ -1,11 +1,11 @@
 package com.sprint.food_delivery.CheckoutModule.Coupons;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
-import java.time.LocalDate;
 
 public class CouponRequestDTO {
 
@@ -42,7 +42,7 @@ public class CouponRequestDTO {
         return discountAmount;
     }
 
-    public void setDiscountAmount(Double discountAmount) {
+    public void setDiscountAmount(double discountAmount) {
         this.discountAmount = discountAmount;
     }
 
