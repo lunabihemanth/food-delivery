@@ -14,6 +14,9 @@ public interface OrderItemsRepository extends JpaRepository<OrderItems, Integer>
     //Derived
     boolean existsByOrderItemId(Integer orderItemId);
 
+    List<OrderItems> findByOrder_OrderId(Integer orderId);
+    
+
    //custom Query
     @Query("SELECT oi FROM OrderItems oi WHERE LOWER(oi.menuItem.itemName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<OrderItems> searchByItemName(@Param("name") String name);

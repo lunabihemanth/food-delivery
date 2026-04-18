@@ -12,5 +12,7 @@ public interface IOrderItemsService {
 
     OrderItemsResponseDTO update(Integer id, OrderItemsRequestDTO dto);
 
+    List<OrderItemsResponseDTO> getByOrderId(Integer orderId);
+
     String delete(Integer id);
 }

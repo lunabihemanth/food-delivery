@@ -6,68 +6,110 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sprint.food_delivery.Exception.BadRequestException;
+import com.sprint.food_delivery.Exception.ConflictException;
+import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+
+import jakarta.validation.constraints.Null;
+
 @Service
 public class DeliveryDriversService implements IDeliveryDriversService {
 
     @Autowired
     private DeliveryDriversRepository repository;
 
-    // Create
+    // ✅ CREATE
     @Override
     public DeliveryDriversResponseDTO save(DeliveryDriversRequestDTO dto) {
 
+        validate(dto);
+
+        // 🔹 Business Logic → phone must be unique
         if (repository.existsByDriverPhone(dto.getDriverPhone())) {
-            throw new RuntimeException("Driver already exists");
+            throw new ConflictException("Driver with this phone already exists");
         }
 
         DeliveryDrivers d = new DeliveryDrivers();
-        d.setDriverName(dto.getDriverName());
-        d.setDriverPhone(dto.getDriverPhone());
-        d.setDriverVehicle(dto.getDriverVehicle());
+        mapToEntity(d, dto);
 
         return map(repository.save(d));
     }
 
-    // Get all
+    // ✅ GET ALL
     @Override
     public List<DeliveryDriversResponseDTO> getAll() {
-        return repository.findAll().stream().map(this::map).collect(Collectors.toList());
+        return repository.findAll()
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
-    // GET BY ID
+    // ✅ GET BY ID
     @Override
     public DeliveryDriversResponseDTO findById(Integer id) {
-        return map(repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Driver not found")));
+
+        DeliveryDrivers driver = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found with id: " + id));
+
+        return map(driver);
     }
 
-    // Update
+    // ✅ UPDATE
     @Override
     public DeliveryDriversResponseDTO update(Integer id, DeliveryDriversRequestDTO dto) {
 
-        DeliveryDrivers existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Driver not found"));
+        validate(dto);
 
-        existing.setDriverName(dto.getDriverName());
-        existing.setDriverPhone(dto.getDriverPhone());
-        existing.setDriverVehicle(dto.getDriverVehicle());
+        DeliveryDrivers existing = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found with id: " + id));
+
+        // 🔹 Business Logic → prevent duplicate phone
+        if (!existing.getDriverPhone().equals(dto.getDriverPhone()) &&
+                repository.existsByDriverPhone(dto.getDriverPhone())) {
+            throw new ConflictException("Driver phone already exists");
+        }
+
+        mapToEntity(existing, dto);
 
         return map(repository.save(existing));
     }
 
-    // Delete
+    // ✅ DELETE
     @Override
     public String delete(Integer id) {
 
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Driver not found");
+            throw new ResourceNotFoundException("Driver not found with id: " + id);
         }
 
         repository.deleteById(id);
-        
-        return "Deleted this id : "+id;
+        return "Driver deleted successfully";
     }
 
+    // 🔹 VALIDATION
+    private void validate(DeliveryDriversRequestDTO dto) {
+
+        if (dto.getDriverName() == null || dto.getDriverName().isBlank()) {
+            throw new BadRequestException("Driver name cannot be empty");
+        }
+
+        if (dto.getDriverPhone() == null || dto.getDriverPhone().isBlank()) {
+            throw new BadRequestException("Driver phone cannot be empty");
+        }
+
+        if (dto.getDriverVehicle() == null || dto.getDriverVehicle().isBlank()) {
+            throw new BadRequestException("Driver vehicle cannot be empty");
+        }
+    }
+
+    // 🔁 ENTITY MAPPER
+    private void mapToEntity(DeliveryDrivers d, DeliveryDriversRequestDTO dto) {
+        d.setDriverName(dto.getDriverName());
+        d.setDriverPhone(dto.getDriverPhone());
+        d.setDriverVehicle(dto.getDriverVehicle());
+    }
+
+    // 🔁 RESPONSE MAPPER
     private DeliveryDriversResponseDTO map(DeliveryDrivers d) {
         return new DeliveryDriversResponseDTO(
                 d.getDriverId(),

@@ -10,6 +10,8 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
 	//derived
     List<Orders> findByCustomer_CustomerId(Integer customerId);
+    List<Orders> findByRestaurant_RestaurantId(Integer restaurantId);
+    
 
 
     //custom Query

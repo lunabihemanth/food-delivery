@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
 import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+import com.sprint.food_delivery.Exception.BadRequestException;
+import com.sprint.food_delivery.Exception.ConflictException;
 import com.sprint.food_delivery.Exception.CustomerNotFoundException;
 import com.sprint.food_delivery.Exception.DeliveryAddressNotFoundException;
 
@@ -20,27 +22,37 @@ public class DeliveryAddressService implements IDeliveryAddressService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // CREATE
+    // ✅ CREATE
     @Override
     public DeliveryAddressResponseDTO save(DeliveryAddressRequestDTO dto) {
+
+        // 🔹 Validation
+        validate(dto);
 
         Customers customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.getCustomerId()));
 
+        // 🔹 Business Logic → prevent duplicate address for same customer
+        boolean exists = deliveryAddressRepository
+                .findByCustomer_CustomerId(dto.getCustomerId())
+                .stream()
+                .anyMatch(a ->
+                        a.getAddressLine1().equalsIgnoreCase(dto.getAddressLine1()) &&
+                        a.getCity().equalsIgnoreCase(dto.getCity()) &&
+                        a.getPostalCode().equals(dto.getPostalCode())
+                );
+
+        if (exists) {
+            throw new ConflictException("Address already exists for this customer");
+        }
+
         DeliveryAddress address = new DeliveryAddress();
-        address.setAddressLine1(dto.getAddressLine1());
-        address.setAddressLine2(dto.getAddressLine2());
-        address.setCity(dto.getCity());
-        address.setState(dto.getState());
-        address.setPostalCode(dto.getPostalCode());
-        address.setCustomer(customer);
+        mapToEntity(address, dto, customer);
 
-        DeliveryAddress saved = deliveryAddressRepository.save(address);
-
-        return mapToResponseDTO(saved);
+        return mapToResponseDTO(deliveryAddressRepository.save(address));
     }
 
-    // GET ALL
+    // ✅ GET ALL
     @Override
     public List<DeliveryAddressResponseDTO> getAll() {
         return deliveryAddressRepository.findAll()
@@ -49,16 +61,17 @@ public class DeliveryAddressService implements IDeliveryAddressService {
                 .collect(Collectors.toList());
     }
 
-    // GET BY ID
+    // ✅ GET BY ID
     @Override
     public DeliveryAddressResponseDTO findById(Integer id) {
+
         DeliveryAddress address = deliveryAddressRepository.findById(id)
                 .orElseThrow(() -> new DeliveryAddressNotFoundException(id));
 
         return mapToResponseDTO(address);
     }
 
-    // Get by Customer Id
+    // ✅ GET BY CUSTOMER ID
     @Override
     public List<DeliveryAddressResponseDTO> getByCustomerId(Integer customerId) {
 
@@ -72,9 +85,11 @@ public class DeliveryAddressService implements IDeliveryAddressService {
                 .collect(Collectors.toList());
     }
 
-    // Update
+    // ✅ UPDATE
     @Override
     public DeliveryAddressResponseDTO update(Integer id, DeliveryAddressRequestDTO dto) {
+
+        validate(dto);
 
         DeliveryAddress existing = deliveryAddressRepository.findById(id)
                 .orElseThrow(() -> new DeliveryAddressNotFoundException(id));
@@ -82,30 +97,58 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         Customers customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.getCustomerId()));
 
-        existing.setAddressLine1(dto.getAddressLine1());
-        existing.setAddressLine2(dto.getAddressLine2());
-        existing.setCity(dto.getCity());
-        existing.setState(dto.getState());
-        existing.setPostalCode(dto.getPostalCode());
-        existing.setCustomer(customer);
+        mapToEntity(existing, dto, customer);
 
-        DeliveryAddress updated = deliveryAddressRepository.save(existing);
-
-        return mapToResponseDTO(updated);
+        return mapToResponseDTO(deliveryAddressRepository.save(existing));
     }
 
-    // Delete
+    // ✅ DELETE
     @Override
     public String delete(Integer id) {
+
         if (!deliveryAddressRepository.existsById(id)) {
             throw new DeliveryAddressNotFoundException(id);
         }
+
         deliveryAddressRepository.deleteById(id);
-        
-        return "Deleted this id";
+
+        return "Address deleted successfully with id: " + id;
     }
 
-    //Mapper Method
+    // 🔹 VALIDATION METHOD
+    private void validate(DeliveryAddressRequestDTO dto) {
+
+        if (dto.getAddressLine1() == null || dto.getAddressLine1().isBlank()) {
+            throw new BadRequestException("Address Line1 cannot be empty");
+        }
+
+        if (dto.getCity() == null || dto.getCity().isBlank()) {
+            throw new BadRequestException("City cannot be empty");
+        }
+
+        if (dto.getState() == null || dto.getState().isBlank()) {
+            throw new BadRequestException("State cannot be empty");
+        }
+
+        if (dto.getPostalCode() == null || dto.getPostalCode().isBlank()) {
+            throw new BadRequestException("Postal code cannot be empty");
+        }
+    }
+
+    // 🔁 ENTITY MAPPER
+    private void mapToEntity(DeliveryAddress address,
+                            DeliveryAddressRequestDTO dto,
+                            Customers customer) {
+
+        address.setAddressLine1(dto.getAddressLine1());
+        address.setAddressLine2(dto.getAddressLine2());
+        address.setCity(dto.getCity());
+        address.setState(dto.getState());
+        address.setPostalCode(dto.getPostalCode());
+        address.setCustomer(customer);
+    }
+
+    // 🔁 RESPONSE MAPPER
     private DeliveryAddressResponseDTO mapToResponseDTO(DeliveryAddress address) {
         return new DeliveryAddressResponseDTO(
                 address.getAddressId(),

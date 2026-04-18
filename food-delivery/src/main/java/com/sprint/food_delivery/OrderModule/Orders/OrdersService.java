@@ -7,9 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CustomersModule.Customers.*;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.*;
-import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.*;
+import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
+import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDrivers;
+import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDriversRepository;
+import com.sprint.food_delivery.Exception.BadRequestException;
+import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
+import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRepository;
 
 @Service
 public class OrdersService implements IOrdersService {
@@ -26,72 +30,135 @@ public class OrdersService implements IOrdersService {
     @Autowired
     private DeliveryDriversRepository driversRepository;
 
-    // CREATE
+    // ✅ CREATE ORDER
     @Override
     public OrdersResponseDTO save(OrdersRequestDTO dto) {
 
+        // 🔹 Validate customer
+        var customer = customerRepository.findById(dto.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+
+        // 🔹 Validate restaurant
+        var restaurant = restaurantsRepository.findById(dto.getRestaurantId())
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found"));
+
         Orders order = new Orders();
         order.setOrderDate(LocalDateTime.now());
+        order.setCustomer(customer);
+        order.setRestaurant(restaurant);
 
-        order.setCustomer(customerRepository.findById(dto.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found")));
+        // 🔥 IMPORTANT: Default status (never trust client)
+        order.setOrderStatus("PENDING");
 
-        order.setRestaurant(restaurantsRepository.findById(dto.getRestaurantId())
-                .orElseThrow(() -> new RuntimeException("Restaurant not found")));
-
+        // 🔹 Optional driver assignment
         if (dto.getDeliveryDriverId() != null) {
-            order.setDeliveryDriver(driversRepository.findById(dto.getDeliveryDriverId())
-                    .orElseThrow(() -> new RuntimeException("Driver not found")));
+            DeliveryDrivers driver = driversRepository.findById(dto.getDeliveryDriverId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
+            order.setDeliveryDriver(driver);
         }
-
-        order.setOrderStatus(dto.getOrderStatus());
 
         return map(repository.save(order));
     }
 
-    // GET ALL
+    // ✅ GET ALL
     @Override
     public List<OrdersResponseDTO> getAll() {
-        return repository.findAll().stream().map(this::map).collect(Collectors.toList());
+        return repository.findAll()
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
-    // GET BY ID
+    // ✅ GET BY ID
     @Override
     public OrdersResponseDTO findById(Integer id) {
-        return map(repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found")));
+        Orders order = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
+
+        return map(order);
     }
 
-    // GET BY CUSTOMER
+    // ✅ GET BY CUSTOMER
     @Override
     public List<OrdersResponseDTO> getByCustomerId(Integer customerId) {
+
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResourceNotFoundException("Customer not found with id: " + customerId);
+        }
+
         return repository.findByCustomer_CustomerId(customerId)
-                .stream().map(this::map).collect(Collectors.toList());
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
-    // UPDATE
+    // ✅ GET BY RESTAURANT (IMPORTANT API)
+    @Override
+    public List<OrdersResponseDTO> getByRestaurantId(Integer restaurantId) {
+
+        if (!restaurantsRepository.existsById(restaurantId)) {
+            throw new ResourceNotFoundException("Restaurant not found with id: " + restaurantId);
+        }
+
+        return repository.findByRestaurant_RestaurantId(restaurantId)
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
+    }
+
+    // ✅ UPDATE ORDER STATUS (STRICT FLOW)
     @Override
     public OrdersResponseDTO update(Integer id, OrdersRequestDTO dto) {
 
         Orders existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
 
-        existing.setOrderStatus(dto.getOrderStatus());
+        String currentStatus = existing.getOrderStatus();
+        String newStatus = dto.getOrderStatus();
+
+        // 🔥 STATUS FLOW CONTROL (VERY IMPORTANT)
+        if (!isValidTransition(currentStatus, newStatus)) {
+            throw new BadRequestException("Invalid order status transition from " 
+                    + currentStatus + " to " + newStatus);
+        }
+
+        existing.setOrderStatus(newStatus);
 
         return map(repository.save(existing));
     }
 
-    // DELETE
+    // ✅ DELETE
     @Override
     public String delete(Integer id) {
-        if (!repository.existsById(id)) {
-            throw new RuntimeException("Order not found");
+
+        Orders order = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
+
+        // 🔥 Business Rule → cannot delete delivered orders
+        if ("DELIVERED".equals(order.getOrderStatus())) {
+            throw new BadRequestException("Delivered orders cannot be deleted");
         }
-        repository.deleteById(id);
-        
-        return "Deleted";
+
+        repository.delete(order);
+
+        return "Order deleted successfully with id: " + id;
     }
 
+    // 🔥 STATUS TRANSITION RULES
+    private boolean isValidTransition(String current, String next) {
+
+        if (current.equals("PENDING") && next.equals("CONFIRMED")) return true;
+
+        if (current.equals("CONFIRMED") &&
+                (next.equals("OUT_FOR_DELIVERY") || next.equals("CANCELLED"))) return true;
+
+        if (current.equals("OUT_FOR_DELIVERY") &&
+                next.equals("DELIVERED")) return true;
+
+        return false;
+    }
+
+    // 🔁 MAPPER
     private OrdersResponseDTO map(Orders o) {
         return new OrdersResponseDTO(
                 o.getOrderId(),
