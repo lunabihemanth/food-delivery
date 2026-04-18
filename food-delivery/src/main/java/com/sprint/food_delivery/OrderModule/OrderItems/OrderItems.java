@@ -7,29 +7,28 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-
 @Entity
 
 public class OrderItems {
-	
+
 	@Id
     @Column(name = "order_item_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderItemId;
 
 	@NotNull
-	@Min(value=1,message = "Quantity must be atleast 1.")
-    private Integer quantity;
+	@Min(value = 1, message = "Quantity must be atleast 1.")
+	private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    @NotNull(message="order is required.")
-    private Orders order;
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	@NotNull(message = "order is required.")
+	private Orders order;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    @NotNull(message="Menu Item is Required.")
-    private MenuItems menuItem;
+	@ManyToOne
+	@JoinColumn(name = "item_id")
+	@NotNull(message = "Menu Item is Required.")
+	private MenuItems menuItem;
 
 	public Integer getOrderItemId() {
 		return orderItemId;
