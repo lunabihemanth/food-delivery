@@ -28,7 +28,7 @@ public class RatingsService implements IRatingsService {
     @Autowired
     private RestaurantsRepository restaurantsRepository;
 
-    // ✅ CREATE
+    // Create
     @Override
     public RatingsResponseDTO save(RatingsRequestDTO dto) {
 
@@ -40,22 +40,22 @@ public class RatingsService implements IRatingsService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Restaurant not found with id: " + dto.getRestaurantId()));
 
-        // 🔥 Business Rule → order must belong to same restaurant
+        // order must belong to same restaurant
         if (!order.getRestaurant().getRestaurantId().equals(dto.getRestaurantId())) {
             throw new BadRequestException("Order does not belong to this restaurant");
         }
 
-        // 🔥 Business Rule → only after delivery
+        // only after delivery
         if (!"DELIVERED".equalsIgnoreCase(order.getOrderStatus())) {
             throw new BadRequestException("You can rate only after order is delivered");
         }
 
-        // 🔥 Business Rule → only one rating per order
+        // only one rating per order
         if (ratingsRepository.existsByOrder_OrderId(dto.getOrderId())) {
             throw new ConflictException("Rating already exists for this order");
         }
 
-        // 🔹 Validation → rating range
+        // rating range
         if (dto.getRating() < 1 || dto.getRating() > 5) {
             throw new BadRequestException("Rating must be between 1 and 5");
         }
@@ -69,7 +69,7 @@ public class RatingsService implements IRatingsService {
         return map(ratingsRepository.save(rating));
     }
 
-    // ✅ GET ALL
+    // Get All
     @Override
     public List<RatingsResponseDTO> getAll() {
         return ratingsRepository.findAll()
@@ -78,7 +78,7 @@ public class RatingsService implements IRatingsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public RatingsResponseDTO findById(Integer ratingId) {
 
@@ -89,7 +89,7 @@ public class RatingsService implements IRatingsService {
         return map(rating);
     }
 
-    // ✅ GET BY RESTAURANT
+    //  GET BY RESTAURANT
     @Override
     public List<RatingsResponseDTO> getByRestaurantId(Integer restaurantId) {
 
@@ -103,7 +103,7 @@ public class RatingsService implements IRatingsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ HIGH RATINGS
+    // HIGH RATINGS
     @Override
     public List<RatingsResponseDTO> getHighRatings(Integer restaurantId, double rating) {
 
@@ -113,7 +113,7 @@ public class RatingsService implements IRatingsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ AVERAGE RATING
+    // AVERAGE RATING
     @Override
     public Double getAverageRating(Integer restaurantId) {
 
@@ -124,7 +124,7 @@ public class RatingsService implements IRatingsService {
         return ratingsRepository.getAverageRatingByRestaurant(restaurantId);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public RatingsResponseDTO update(Integer ratingId, RatingsRequestDTO dto) {
 
@@ -132,7 +132,7 @@ public class RatingsService implements IRatingsService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Rating not found with id: " + ratingId));
 
-        // 🔹 Validate rating
+        // Validate rating
         if (dto.getRating() < 1 || dto.getRating() > 5) {
             throw new BadRequestException("Rating must be between 1 and 5");
         }
@@ -143,7 +143,7 @@ public class RatingsService implements IRatingsService {
         return map(ratingsRepository.save(existing));
     }
 
-    // ✅ UPDATE (PARTIAL)
+    // UPDATE (PARTIAL)
     @Override
     @Transactional
     public String updateRatingValue(Integer ratingId, double rating) {
@@ -161,7 +161,7 @@ public class RatingsService implements IRatingsService {
         return "Rating updated successfully";
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer ratingId) {
 
@@ -174,7 +174,7 @@ public class RatingsService implements IRatingsService {
         return "Rating deleted successfully";
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private RatingsResponseDTO map(Ratings rating) {
         return new RatingsResponseDTO(
                 rating.getRatingId(),

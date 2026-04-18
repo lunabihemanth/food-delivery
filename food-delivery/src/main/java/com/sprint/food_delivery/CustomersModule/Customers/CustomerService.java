@@ -16,11 +16,11 @@ public class CustomerService implements ICustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public CustomerResponseDTO save(CustomerRequestDTO dto) {
 
-        // 🔹 Validation
+        // Validation
         if (dto.getCustomerName() == null || dto.getCustomerName().isBlank()) {
             throw new BadRequestException("Customer name cannot be empty");
         }
@@ -33,7 +33,7 @@ public class CustomerService implements ICustomerService {
             throw new BadRequestException("Phone cannot be empty");
         }
 
-        // 🔹 Business Logic → Email must be unique
+        //Email must be unique
         if (customerRepository.existsByCustomerEmail(dto.getCustomerEmail())) {
             throw new ConflictException("Email already exists");
         }
@@ -71,7 +71,7 @@ public class CustomerService implements ICustomerService {
         Customers existing = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        // 🔹 Business Logic → prevent duplicate email
+        // prevent duplicate email
         if (!existing.getCustomerEmail().equals(dto.getCustomerEmail()) &&
                 customerRepository.existsByCustomerEmail(dto.getCustomerEmail())) {
             throw new ConflictException("Email already exists");
