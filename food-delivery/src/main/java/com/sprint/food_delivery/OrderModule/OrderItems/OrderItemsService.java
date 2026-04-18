@@ -115,8 +115,7 @@ public class OrderItemsService implements IOrderItemsService {
         return "Order item deleted successfully with id: " + id;
     }
 
-    // ---------------- HELPERS ----------------
-
+    //helpers
     private void validateQuantity(Integer qty) {
         if (qty == null || qty <= 0) {
             throw new BadRequestException("Quantity must be greater than 0");

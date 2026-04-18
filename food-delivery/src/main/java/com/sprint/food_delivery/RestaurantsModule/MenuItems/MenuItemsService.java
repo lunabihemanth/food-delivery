@@ -20,11 +20,11 @@ public class MenuItemsService implements IMenuItemsService {
     @Autowired
     private RestaurantsRepository restaurantsRepository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public MenuItemsResponseDTO save(MenuItemsRequestDTO dto) {
 
-        // 🔹 Validation
+        // Validation
         if (dto.getItemName() == null || dto.getItemName().isBlank()) {
             throw new BadRequestException("Item name cannot be empty");
         }
@@ -33,7 +33,7 @@ public class MenuItemsService implements IMenuItemsService {
             throw new BadRequestException("Item price must be greater than 0");
         }
 
-        // 🔹 Restaurant must exist
+        // Restaurant must exist
         Restaurants restaurant = restaurantsRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with id: " + dto.getRestaurantId()));
 
@@ -46,7 +46,7 @@ public class MenuItemsService implements IMenuItemsService {
         return map(repository.save(item));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<MenuItemsResponseDTO> getAll() {
         return repository.findAll()
@@ -55,7 +55,7 @@ public class MenuItemsService implements IMenuItemsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public MenuItemsResponseDTO findById(Integer id) {
 
@@ -65,11 +65,11 @@ public class MenuItemsService implements IMenuItemsService {
         return map(item);
     }
 
-    // ✅ GET BY RESTAURANT
+    // GET BY RESTAURANT
     @Override
     public List<MenuItemsResponseDTO> getByRestaurantId(Integer restaurantId) {
 
-        // 🔹 Validate restaurant exists (important)
+        // Validate restaurant exists 
         if (!restaurantsRepository.existsById(restaurantId)) {
             throw new ResourceNotFoundException("Restaurant not found with id: " + restaurantId);
         }
@@ -80,7 +80,7 @@ public class MenuItemsService implements IMenuItemsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public MenuItemsResponseDTO update(Integer id, MenuItemsRequestDTO dto) {
 
@@ -90,7 +90,7 @@ public class MenuItemsService implements IMenuItemsService {
         Restaurants restaurant = restaurantsRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with id: " + dto.getRestaurantId()));
 
-        // 🔹 Validation
+        //  Validation
         if (dto.getItemName() == null || dto.getItemName().isBlank()) {
             throw new BadRequestException("Item name cannot be empty");
         }
@@ -107,7 +107,7 @@ public class MenuItemsService implements IMenuItemsService {
         return map(repository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer id) {
 
@@ -119,7 +119,7 @@ public class MenuItemsService implements IMenuItemsService {
         return "Menu item deleted successfully with id: " + id;
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private MenuItemsResponseDTO map(MenuItems m) {
         return new MenuItemsResponseDTO(
                 m.getItemId(),

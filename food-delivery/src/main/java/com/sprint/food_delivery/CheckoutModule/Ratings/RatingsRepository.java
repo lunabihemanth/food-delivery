@@ -10,24 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface RatingsRepository extends JpaRepository<Ratings, Integer> {
 
-    // 🔹 GET by restaurant
+    // GET by restaurant
     List<Ratings> findByRestaurantRestaurantId(Integer restaurantId);
 
-    // 🔹 CHECK if rating already exists for order
+    // CHECK if rating already exists for order
     boolean existsByOrder_OrderId(Integer orderId);
 
-    // 🔹 CUSTOM: HIGH RATINGS FILTER
+    // CUSTOM: HIGH RATINGS FILTER
     @Query("SELECT r FROM Ratings r WHERE r.restaurant.restaurantId = :restaurantId AND r.rating >= :rating")
     List<Ratings> findHighRatingsByRestaurant(
             @Param("restaurantId") Integer restaurantId,
             @Param("rating") double rating
     );
 
-    // 🔹 CUSTOM: AVERAGE RATING
+    // CUSTOM: AVERAGE RATING
     @Query("SELECT AVG(r.rating) FROM Ratings r WHERE r.restaurant.restaurantId = :restaurantId")
     Double getAverageRatingByRestaurant(@Param("restaurantId") Integer restaurantId);
 
-    // 🔹 PARTIAL UPDATE (USED IN SERVICE)
+    // Partial update
     @Modifying
     @Transactional
     @Query("UPDATE Ratings r SET r.rating = :rating WHERE r.ratingId = :ratingId")

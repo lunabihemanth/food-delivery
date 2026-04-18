@@ -25,26 +25,26 @@ public class OrdersCouponsService implements IOrdersCouponsService {
     @Autowired
     private CouponsRepository couponsRepository;
 
-    // ✅ APPLY COUPON
+    // Apply coupon
     @Override
     public OrdersCouponsResponseDTO applyCoupon(OrdersCouponsRequestDTO dto) {
 
-        // 🔹 Validate Order
+        // Validate Order
         Orders order = ordersRepository.findById(dto.getOrderId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Order not found with id: " + dto.getOrderId()));
 
-        // 🔹 Validate Coupon
+        // Validate Coupon
         Coupons coupon = couponsRepository.findById(dto.getCouponId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Coupon not found with id: " + dto.getCouponId()));
 
-        // 🔥 Business Logic → Expiry check
+        // Expiry check
         if (coupon.getExpiryDate().isBefore(LocalDate.now())) {
             throw new BadRequestException("Coupon is expired");
         }
 
-        // 🔥 Business Logic → prevent duplicate coupon on same order
+        //prevent duplicate coupon on same order
         OrdersCouponsId id = new OrdersCouponsId(dto.getOrderId(), dto.getCouponId());
 
         if (ordersCouponsRepository.existsById(id)) {
@@ -59,11 +59,11 @@ public class OrdersCouponsService implements IOrdersCouponsService {
         return map(ordersCouponsRepository.save(entity));
     }
 
-    // ✅ GET ALL COUPONS FOR ORDER
+    //  GET ALL COUPONS FOR ORDER
     @Override
     public List<OrdersCouponsResponseDTO> getCouponsByOrderId(Integer orderId) {
 
-        // 🔹 Validate order exists
+        // Validate order exists
         if (!ordersRepository.existsById(orderId)) {
             throw new ResourceNotFoundException("Order not found with id: " + orderId);
         }
@@ -74,7 +74,7 @@ public class OrdersCouponsService implements IOrdersCouponsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ REMOVE COUPON
+    // REMOVE COUPON
     @Override
     public String removeCoupon(Integer orderId, Integer couponId) {
 
@@ -89,7 +89,7 @@ public class OrdersCouponsService implements IOrdersCouponsService {
         return "Coupon removed successfully from order: " + orderId;
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private OrdersCouponsResponseDTO map(OrdersCoupons oc) {
         return new OrdersCouponsResponseDTO(
                 oc.getOrder().getOrderId(),

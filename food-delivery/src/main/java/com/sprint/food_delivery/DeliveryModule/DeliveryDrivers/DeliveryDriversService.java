@@ -10,7 +10,7 @@ import com.sprint.food_delivery.Exception.BadRequestException;
 import com.sprint.food_delivery.Exception.ConflictException;
 import com.sprint.food_delivery.Exception.ResourceNotFoundException;
 
-import jakarta.validation.constraints.Null;
+
 
 @Service
 public class DeliveryDriversService implements IDeliveryDriversService {
@@ -18,13 +18,13 @@ public class DeliveryDriversService implements IDeliveryDriversService {
     @Autowired
     private DeliveryDriversRepository repository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public DeliveryDriversResponseDTO save(DeliveryDriversRequestDTO dto) {
 
         validate(dto);
 
-        // 🔹 Business Logic → phone must be unique
+        // phone must be unique
         if (repository.existsByDriverPhone(dto.getDriverPhone())) {
             throw new ConflictException("Driver with this phone already exists");
         }
@@ -35,7 +35,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return map(repository.save(d));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<DeliveryDriversResponseDTO> getAll() {
         return repository.findAll()
@@ -44,7 +44,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public DeliveryDriversResponseDTO findById(Integer id) {
 
@@ -54,7 +54,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return map(driver);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public DeliveryDriversResponseDTO update(Integer id, DeliveryDriversRequestDTO dto) {
 
@@ -63,7 +63,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         DeliveryDrivers existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Driver not found with id: " + id));
 
-        // 🔹 Business Logic → prevent duplicate phone
+        // prevent duplicate phone
         if (!existing.getDriverPhone().equals(dto.getDriverPhone()) &&
                 repository.existsByDriverPhone(dto.getDriverPhone())) {
             throw new ConflictException("Driver phone already exists");
@@ -74,7 +74,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return map(repository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer id) {
 
@@ -86,7 +86,7 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         return "Driver deleted successfully";
     }
 
-    // 🔹 VALIDATION
+    // VALIDATION
     private void validate(DeliveryDriversRequestDTO dto) {
 
         if (dto.getDriverName() == null || dto.getDriverName().isBlank()) {
@@ -102,14 +102,14 @@ public class DeliveryDriversService implements IDeliveryDriversService {
         }
     }
 
-    // 🔁 ENTITY MAPPER
+    // ENTITY MAPPER
     private void mapToEntity(DeliveryDrivers d, DeliveryDriversRequestDTO dto) {
         d.setDriverName(dto.getDriverName());
         d.setDriverPhone(dto.getDriverPhone());
         d.setDriverVehicle(dto.getDriverVehicle());
     }
 
-    // 🔁 RESPONSE MAPPER
+    // RESPONSE MAPPER
     private DeliveryDriversResponseDTO map(DeliveryDrivers d) {
         return new DeliveryDriversResponseDTO(
                 d.getDriverId(),
