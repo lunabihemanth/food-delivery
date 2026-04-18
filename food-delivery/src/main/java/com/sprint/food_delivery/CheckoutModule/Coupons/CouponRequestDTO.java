@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 public class CouponRequestDTO {
 
-    @NotNull(message = "Coupon ID cannot be null")
     private Integer couponId;
 
     @NotBlank(message = "Coupon code cannot be empty")
