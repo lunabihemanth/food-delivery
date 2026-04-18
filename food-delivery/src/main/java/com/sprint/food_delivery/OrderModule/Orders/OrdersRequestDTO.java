@@ -1,5 +1,8 @@
 package com.sprint.food_delivery.OrderModule.Orders;
 
+import java.time.LocalDateTime;
+
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,7 +18,10 @@ public class OrdersRequestDTO {
 
     @NotBlank(message = "Order status cannot be empty")
     private String orderStatus;
-
+    
+    @NotNull(message = "Order date cannot be null")
+    private LocalDateTime orderDate;
+    
     public Integer getCustomerId() {
         return customerId;
     }
@@ -47,5 +53,13 @@ public class OrdersRequestDTO {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
+	}
 
 }
