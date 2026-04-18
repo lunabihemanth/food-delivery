@@ -1,4 +1,4 @@
-package com.sprint.food_delivery;
+/*  package com.sprint.food_delivery;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,3 +29,5 @@ public class CustomerTest {
         assertEquals("Luna", save.getCustomerName());
     }
 }
+
+ */

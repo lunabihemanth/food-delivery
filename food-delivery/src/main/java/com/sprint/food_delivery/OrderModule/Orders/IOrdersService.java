@@ -15,4 +15,6 @@ public interface IOrdersService {
     OrdersResponseDTO update(Integer id, OrdersRequestDTO dto);
 
     String delete(Integer id);
+
+    List<OrdersResponseDTO> getByRestaurantId(Integer restaurantId);
 }
