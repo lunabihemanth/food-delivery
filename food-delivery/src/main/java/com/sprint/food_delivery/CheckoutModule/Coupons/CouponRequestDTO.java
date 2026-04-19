@@ -22,6 +22,8 @@ public class CouponRequestDTO {
     @Future(message = "Expiry date must be in the future")
     private LocalDate expiryDate;
 
+    // ================= GETTERS & SETTERS =================
+
     public Integer getCouponId() {
         return couponId;
     }
@@ -42,7 +44,8 @@ public class CouponRequestDTO {
         return discountAmount;
     }
 
-    public void setDiscountAmount(double discountAmount) {
+    // ✅ FIXED SETTER
+    public void setDiscountAmount(Double discountAmount) {
         this.discountAmount = discountAmount;
     }
 
