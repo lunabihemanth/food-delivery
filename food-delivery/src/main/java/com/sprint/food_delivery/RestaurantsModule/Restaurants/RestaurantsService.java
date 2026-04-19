@@ -16,13 +16,13 @@ public class RestaurantsService implements IRestaurantsService {
     @Autowired
     private RestaurantsRepository repository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public RestaurantResponseDTO save(RestaurantsRequestDTO dto) {
 
         validate(dto);
 
-        // 🔹 Business Logic → unique restaurant name
+        // unique restaurant name
         if (repository.existsByRestaurantName(dto.getRestaurantName())) {
             throw new ConflictException("Restaurant already exists with name: " + dto.getRestaurantName());
         }
@@ -33,7 +33,7 @@ public class RestaurantsService implements IRestaurantsService {
         return map(repository.save(r));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<RestaurantResponseDTO> getAll() {
         return repository.findAll()
@@ -42,7 +42,7 @@ public class RestaurantsService implements IRestaurantsService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public RestaurantResponseDTO findById(Integer id) {
 
@@ -52,7 +52,7 @@ public class RestaurantsService implements IRestaurantsService {
         return map(restaurant);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public RestaurantResponseDTO update(Integer id, RestaurantsRequestDTO dto) {
 
@@ -61,7 +61,7 @@ public class RestaurantsService implements IRestaurantsService {
         Restaurants existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with id: " + id));
 
-        // 🔹 Business Logic → prevent duplicate name
+        // prevent duplicate name
         if (!existing.getRestaurantName().equalsIgnoreCase(dto.getRestaurantName()) &&
                 repository.existsByRestaurantName(dto.getRestaurantName())) {
             throw new ConflictException("Restaurant name already exists");
@@ -72,7 +72,7 @@ public class RestaurantsService implements IRestaurantsService {
         return map(repository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer id) {
 
@@ -85,7 +85,7 @@ public class RestaurantsService implements IRestaurantsService {
         return "Restaurant deleted successfully";
     }
 
-    // 🔹 VALIDATION
+    // VALIDATION
     private void validate(RestaurantsRequestDTO dto) {
 
         if (dto.getRestaurantName() == null || dto.getRestaurantName().isBlank()) {
@@ -101,14 +101,14 @@ public class RestaurantsService implements IRestaurantsService {
         }
     }
 
-    // 🔁 ENTITY MAPPER
+    // ENTITY MAPPER
     private void mapToEntity(Restaurants r, RestaurantsRequestDTO dto) {
         r.setRestaurantName(dto.getRestaurantName());
         r.setRestaurantAddress(dto.getRestaurantAddress());
         r.setRestaurantPhone(dto.getRestaurantPhone());
     }
 
-    // 🔁 RESPONSE MAPPER
+    // RESPONSE MAPPER
     private RestaurantResponseDTO map(Restaurants r) {
         return new RestaurantResponseDTO(
                 r.getRestaurantId(),

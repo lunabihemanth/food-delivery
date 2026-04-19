@@ -22,17 +22,17 @@ public class DeliveryAddressService implements IDeliveryAddressService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public DeliveryAddressResponseDTO save(DeliveryAddressRequestDTO dto) {
 
-        // 🔹 Validation
+        // Validation
         validate(dto);
 
         Customers customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.getCustomerId()));
 
-        // 🔹 Business Logic → prevent duplicate address for same customer
+        // prevent duplicate address for same customer
         boolean exists = deliveryAddressRepository
                 .findByCustomer_CustomerId(dto.getCustomerId())
                 .stream()
@@ -52,7 +52,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return mapToResponseDTO(deliveryAddressRepository.save(address));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<DeliveryAddressResponseDTO> getAll() {
         return deliveryAddressRepository.findAll()
@@ -61,7 +61,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public DeliveryAddressResponseDTO findById(Integer id) {
 
@@ -71,7 +71,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return mapToResponseDTO(address);
     }
 
-    // ✅ GET BY CUSTOMER ID
+    // GET BY CUSTOMER ID
     @Override
     public List<DeliveryAddressResponseDTO> getByCustomerId(Integer customerId) {
 
@@ -85,7 +85,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public DeliveryAddressResponseDTO update(Integer id, DeliveryAddressRequestDTO dto) {
 
@@ -102,7 +102,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return mapToResponseDTO(deliveryAddressRepository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer id) {
 
@@ -115,7 +115,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         return "Address deleted successfully with id: " + id;
     }
 
-    // 🔹 VALIDATION METHOD
+    // VALIDATION METHOD
     private void validate(DeliveryAddressRequestDTO dto) {
 
         if (dto.getAddressLine1() == null || dto.getAddressLine1().isBlank()) {
@@ -135,7 +135,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         }
     }
 
-    // 🔁 ENTITY MAPPER
+    // ENTITY MAPPER
     private void mapToEntity(DeliveryAddress address,
                             DeliveryAddressRequestDTO dto,
                             Customers customer) {
@@ -148,7 +148,7 @@ public class DeliveryAddressService implements IDeliveryAddressService {
         address.setCustomer(customer);
     }
 
-    // 🔁 RESPONSE MAPPER
+    // RESPONSE MAPPER
     private DeliveryAddressResponseDTO mapToResponseDTO(DeliveryAddress address) {
         return new DeliveryAddressResponseDTO(
                 address.getAddressId(),

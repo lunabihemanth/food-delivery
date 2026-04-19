@@ -30,15 +30,15 @@ public class OrdersService implements IOrdersService {
     @Autowired
     private DeliveryDriversRepository driversRepository;
 
-    // ✅ CREATE ORDER
+    // CREATE ORDER
     @Override
     public OrdersResponseDTO save(OrdersRequestDTO dto) {
 
-        // 🔹 Validate customer
+        // Validate customer
         var customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        // 🔹 Validate restaurant
+        // Validate restaurant
         var restaurant = restaurantsRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found"));
 
@@ -47,10 +47,10 @@ public class OrdersService implements IOrdersService {
         order.setCustomer(customer);
         order.setRestaurant(restaurant);
 
-        // 🔥 IMPORTANT: Default status (never trust client)
+        // Default status (never trust client)
         order.setOrderStatus("PENDING");
 
-        // 🔹 Optional driver assignment
+        // driver assignment
         if (dto.getDeliveryDriverId() != null) {
             DeliveryDrivers driver = driversRepository.findById(dto.getDeliveryDriverId())
                     .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
@@ -60,7 +60,7 @@ public class OrdersService implements IOrdersService {
         return map(repository.save(order));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<OrdersResponseDTO> getAll() {
         return repository.findAll()
@@ -69,7 +69,7 @@ public class OrdersService implements IOrdersService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public OrdersResponseDTO findById(Integer id) {
         Orders order = repository.findById(id)
@@ -78,7 +78,7 @@ public class OrdersService implements IOrdersService {
         return map(order);
     }
 
-    // ✅ GET BY CUSTOMER
+    // GET BY CUSTOMER
     @Override
     public List<OrdersResponseDTO> getByCustomerId(Integer customerId) {
 
@@ -92,7 +92,7 @@ public class OrdersService implements IOrdersService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY RESTAURANT (IMPORTANT API)
+    // GET BY RESTAURANT 
     @Override
     public List<OrdersResponseDTO> getByRestaurantId(Integer restaurantId) {
 
@@ -106,7 +106,7 @@ public class OrdersService implements IOrdersService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ UPDATE ORDER STATUS (STRICT FLOW)
+    // UPDATE ORDER STATUS 
     @Override
     public OrdersResponseDTO update(Integer id, OrdersRequestDTO dto) {
 
@@ -116,7 +116,7 @@ public class OrdersService implements IOrdersService {
         String currentStatus = existing.getOrderStatus();
         String newStatus = dto.getOrderStatus();
 
-        // 🔥 STATUS FLOW CONTROL (VERY IMPORTANT)
+        // STATUS FLOW CONTROL 
         if (!isValidTransition(currentStatus, newStatus)) {
             throw new BadRequestException("Invalid order status transition from " 
                     + currentStatus + " to " + newStatus);
@@ -127,14 +127,14 @@ public class OrdersService implements IOrdersService {
         return map(repository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer id) {
 
         Orders order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
 
-        // 🔥 Business Rule → cannot delete delivered orders
+        // cannot delete delivered orders
         if ("DELIVERED".equals(order.getOrderStatus())) {
             throw new BadRequestException("Delivered orders cannot be deleted");
         }
@@ -144,7 +144,7 @@ public class OrdersService implements IOrdersService {
         return "Order deleted successfully with id: " + id;
     }
 
-    // 🔥 STATUS TRANSITION RULES
+    // status transition rule
     private boolean isValidTransition(String current, String next) {
 
         if (current.equals("PENDING") && next.equals("CONFIRMED")) return true;
@@ -158,7 +158,7 @@ public class OrdersService implements IOrdersService {
         return false;
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private OrdersResponseDTO map(Orders o) {
         return new OrdersResponseDTO(
                 o.getOrderId(),
