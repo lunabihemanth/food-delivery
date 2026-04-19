@@ -60,7 +60,7 @@ public class CouponService implements ICouponService {
                 .collect(Collectors.toList());
     }
 
-    // Validate the Coupon
+    // ✅ GET BY CODE
     @Override
     public CouponResponseDTO findByCode(String couponCode) {
 

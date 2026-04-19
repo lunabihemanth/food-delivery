@@ -15,6 +15,7 @@ public class Coupons {
 
     @Id
     @Column(name = "coupon_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ FIX
     private Integer couponId;
 
     @Column(name = "coupon_code", unique = true)
