@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Coupons;
+package com.sprint.food_delivery.checkoutmodule.coupons;
 
 import java.time.LocalDate;
 
@@ -22,7 +22,7 @@ public class CouponRequestDTO {
     @Future(message = "Expiry date must be in the future")
     private LocalDate expiryDate;
 
-    // ================= GETTERS & SETTERS =================
+    // Getters and Setters
 
     public Integer getCouponId() {
         return couponId;
@@ -44,7 +44,6 @@ public class CouponRequestDTO {
         return discountAmount;
     }
 
-    // ✅ FIXED SETTER
     public void setDiscountAmount(Double discountAmount) {
         this.discountAmount = discountAmount;
     }

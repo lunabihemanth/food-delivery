@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RestaurantsModule.Restaurants;
+package com.sprint.food_delivery.restaurantsmodule.restaurants;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

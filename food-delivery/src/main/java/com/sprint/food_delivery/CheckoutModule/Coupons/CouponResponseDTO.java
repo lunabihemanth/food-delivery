@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Coupons;
+package com.sprint.food_delivery.checkoutmodule.coupons;
 
 import java.time.LocalDate;
 

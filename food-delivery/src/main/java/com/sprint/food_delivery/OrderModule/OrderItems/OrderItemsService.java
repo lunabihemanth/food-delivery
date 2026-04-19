@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.OrderModule.OrderItems;
+package com.sprint.food_delivery.ordermodule.orderitems;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
-import com.sprint.food_delivery.OrderModule.Orders.OrdersRepository;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItems;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItemsRepository;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.ordermodule.orders.Orders;
+import com.sprint.food_delivery.ordermodule.orders.OrdersRepository;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItems;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItemsRepository;
 
 @Service
 public class OrderItemsService implements IOrderItemsService {

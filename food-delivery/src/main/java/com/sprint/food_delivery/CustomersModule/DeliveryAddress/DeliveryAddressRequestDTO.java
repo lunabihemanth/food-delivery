@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.customersmodule.deliveryaddress;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

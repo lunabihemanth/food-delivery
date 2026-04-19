@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.OrderModule.OrderItems;
+package com.sprint.food_delivery.ordermodule.orderitems;
 
 
 public class OrderItemsResponseDTO {

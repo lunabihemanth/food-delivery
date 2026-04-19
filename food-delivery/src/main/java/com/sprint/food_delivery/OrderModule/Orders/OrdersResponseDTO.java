@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.OrderModule.Orders;
+package com.sprint.food_delivery.ordermodule.orders;
 
 import java.time.LocalDateTime;
 

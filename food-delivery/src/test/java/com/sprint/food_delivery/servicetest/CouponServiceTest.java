@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.CheckoutModule.Coupons.CouponRequestDTO;
-import com.sprint.food_delivery.CheckoutModule.Coupons.CouponResponseDTO;
-import com.sprint.food_delivery.CheckoutModule.Coupons.ICouponService;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.checkoutmodule.coupons.CouponRequestDTO;
+import com.sprint.food_delivery.checkoutmodule.coupons.CouponResponseDTO;
+import com.sprint.food_delivery.checkoutmodule.coupons.ICouponService;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional
@@ -26,7 +26,7 @@ public class CouponServiceTest {
     @Autowired
     private ICouponService couponService;
 
-    // 🔧 Helper
+    // Helper
     private CouponRequestDTO createValidDTO() {
         CouponRequestDTO dto = new CouponRequestDTO();
         dto.setCouponCode("CODE_" + System.nanoTime());

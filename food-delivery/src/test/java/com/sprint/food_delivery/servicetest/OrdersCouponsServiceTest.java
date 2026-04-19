@@ -13,19 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.CheckoutModule.Coupons.CouponRequestDTO;
-import com.sprint.food_delivery.CheckoutModule.Coupons.ICouponService;
-import com.sprint.food_delivery.CheckoutModule.OrdersCoupons.IOrdersCouponsService;
-import com.sprint.food_delivery.CheckoutModule.OrdersCoupons.OrdersCouponsRequestDTO;
-import com.sprint.food_delivery.CheckoutModule.OrdersCoupons.OrdersCouponsResponseDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerRequestDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.ICustomerService;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
-import com.sprint.food_delivery.OrderModule.Orders.IOrdersService;
-import com.sprint.food_delivery.OrderModule.Orders.OrdersRequestDTO;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.IRestaurantsService;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRequestDTO;
+import com.sprint.food_delivery.checkoutmodule.coupons.CouponRequestDTO;
+import com.sprint.food_delivery.checkoutmodule.coupons.ICouponService;
+import com.sprint.food_delivery.checkoutmodule.orderscoupons.IOrdersCouponsService;
+import com.sprint.food_delivery.checkoutmodule.orderscoupons.OrdersCouponsRequestDTO;
+import com.sprint.food_delivery.checkoutmodule.orderscoupons.OrdersCouponsResponseDTO;
+import com.sprint.food_delivery.customersmodule.customers.CustomerRequestDTO;
+import com.sprint.food_delivery.customersmodule.customers.ICustomerService;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.ordermodule.orders.IOrdersService;
+import com.sprint.food_delivery.ordermodule.orders.OrdersRequestDTO;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.IRestaurantsService;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantsRequestDTO;
 
 @SpringBootTest
 @Transactional

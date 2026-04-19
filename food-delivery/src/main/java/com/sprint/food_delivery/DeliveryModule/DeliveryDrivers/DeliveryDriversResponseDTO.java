@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.DeliveryModule.DeliveryDrivers;
+package com.sprint.food_delivery.deliverymodule.deliverydrivers;
 
 public class DeliveryDriversResponseDTO {
 

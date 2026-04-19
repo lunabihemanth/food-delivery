@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.OrdersCoupons;
+package com.sprint.food_delivery.checkoutmodule.orderscoupons;
 
 public class OrdersCouponsResponseDTO {
 

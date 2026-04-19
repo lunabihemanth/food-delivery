@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RestaurantsModule.MenuItems;
+package com.sprint.food_delivery.restaurantsmodule.menuitems;
 
 import java.util.List;
 

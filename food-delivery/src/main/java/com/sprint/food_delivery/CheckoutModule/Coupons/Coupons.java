@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Coupons;
+package com.sprint.food_delivery.checkoutmodule.coupons;
 
 import java.time.LocalDate;
 
@@ -15,7 +15,7 @@ public class Coupons {
 
     @Id
     @Column(name = "coupon_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ FIX
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Integer couponId;
 
     @Column(name = "coupon_code", unique = true)

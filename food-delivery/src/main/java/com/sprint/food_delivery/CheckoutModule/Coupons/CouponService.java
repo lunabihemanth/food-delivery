@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Coupons;
+package com.sprint.food_delivery.checkoutmodule.coupons;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
 
 @Service
 public class CouponService implements ICouponService {
@@ -17,11 +17,11 @@ public class CouponService implements ICouponService {
     @Autowired
     private CouponsRepository couponRepository;
 
-    // ✅ CREATE
+    // CREATE
     @Override
     public CouponResponseDTO save(CouponRequestDTO dto) {
 
-        // 🔹 Validation
+        //Validation
         if (dto.getCouponCode() == null || dto.getCouponCode().isBlank()) {
             throw new BadRequestException("Coupon code cannot be empty");
         }
@@ -38,7 +38,7 @@ public class CouponService implements ICouponService {
             throw new BadRequestException("Coupon already expired");
         }
 
-        // 🔹 Business Rule → Unique coupon code
+        //Business Rule → Unique coupon code
         if (couponRepository.existsByCouponCode(dto.getCouponCode())) {
             throw new ConflictException("Coupon code already exists");
         }
@@ -51,7 +51,7 @@ public class CouponService implements ICouponService {
         return mapToDTO(couponRepository.save(coupon));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Override
     public List<CouponResponseDTO> getAll() {
         return couponRepository.findAll()
@@ -60,7 +60,7 @@ public class CouponService implements ICouponService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ GET BY CODE
+    // GET BY CODE
     @Override
     public CouponResponseDTO findByCode(String couponCode) {
 
@@ -71,7 +71,7 @@ public class CouponService implements ICouponService {
         Coupons coupon = couponRepository.findByCouponCode(couponCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Coupon not found"));
 
-        // 🔹 Business Rule → Expiry validation
+        // Business Rule → Expiry validation
         if (coupon.getExpiryDate().isBefore(LocalDate.now())) {
             throw new BadRequestException("Coupon is expired");
         }
@@ -79,7 +79,7 @@ public class CouponService implements ICouponService {
         return mapToDTO(coupon);
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Override
     public CouponResponseDTO findById(Integer couponId) {
 
@@ -93,14 +93,14 @@ public class CouponService implements ICouponService {
         return mapToDTO(coupon);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Override
     public CouponResponseDTO update(Integer couponId, CouponRequestDTO dto) {
 
         Coupons existing = couponRepository.findById(couponId)
                 .orElseThrow(() -> new ResourceNotFoundException("Coupon not found"));
 
-        // 🔹 Validation
+        // Validation
         if (dto.getCouponCode() == null || dto.getCouponCode().isBlank()) {
             throw new BadRequestException("Coupon code cannot be empty");
         }
@@ -113,7 +113,7 @@ public class CouponService implements ICouponService {
             throw new BadRequestException("Invalid expiry date");
         }
 
-        // 🔹 Business Rule → Prevent duplicate code
+        // Business Rule → Prevent duplicate code
         if (!existing.getCouponCode().equals(dto.getCouponCode()) &&
                 couponRepository.existsByCouponCode(dto.getCouponCode())) {
             throw new ConflictException("Coupon code already exists");
@@ -126,7 +126,7 @@ public class CouponService implements ICouponService {
         return mapToDTO(couponRepository.save(existing));
     }
 
-    // ✅ DELETE
+    // DELETE
     @Override
     public String delete(Integer couponId) {
 
@@ -143,7 +143,7 @@ public class CouponService implements ICouponService {
         return "Coupon deleted successfully";
     }
 
-    // 🔁 MAPPER
+    // MAPPER
     private CouponResponseDTO mapToDTO(Coupons coupon) {
         return new CouponResponseDTO(
                 coupon.getCouponId(),

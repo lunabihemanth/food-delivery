@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.Customers;
+package com.sprint.food_delivery.customersmodule.customers;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +24,8 @@ public class Customers {
 
     @Column(name = "customer_phone", nullable = false)
     private String customerPhone;
+
+    //getters and setters
 
     public Integer getCustomerId() {
         return customerId;

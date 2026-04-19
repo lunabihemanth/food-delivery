@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.customersmodule.deliveryaddress;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerRepository;
-import com.sprint.food_delivery.CustomersModule.Customers.Customers;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.CustomerNotFoundException;
-import com.sprint.food_delivery.Exception.DeliveryAddressNotFoundException;
+import com.sprint.food_delivery.customersmodule.customers.CustomerRepository;
+import com.sprint.food_delivery.customersmodule.customers.Customers;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.CustomerNotFoundException;
+import com.sprint.food_delivery.exception.DeliveryAddressNotFoundException;
 
 @Service
 public class DeliveryAddressService implements IDeliveryAddressService {

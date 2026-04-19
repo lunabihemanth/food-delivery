@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RestaurantsModule.Restaurants;
+package com.sprint.food_delivery.restaurantsmodule.restaurants;
 
 public class RestaurantResponseDTO {
 	private Integer restaurantId;

@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RestaurantsModule.MenuItems;
+package com.sprint.food_delivery.restaurantsmodule.menuitems;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRepository;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.Restaurants;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantsRepository;
 
 @Service
 public class MenuItemsService implements IMenuItemsService {

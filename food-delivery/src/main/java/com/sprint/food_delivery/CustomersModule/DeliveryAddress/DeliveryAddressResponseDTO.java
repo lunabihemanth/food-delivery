@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.customersmodule.deliveryaddress;
 
 public class DeliveryAddressResponseDTO {
 

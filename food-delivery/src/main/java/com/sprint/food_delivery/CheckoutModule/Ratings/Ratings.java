@@ -1,7 +1,7 @@
-package com.sprint.food_delivery.CheckoutModule.Ratings;
+package com.sprint.food_delivery.checkoutmodule.ratings;
 
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
+import com.sprint.food_delivery.ordermodule.orders.Orders;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.Restaurants;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

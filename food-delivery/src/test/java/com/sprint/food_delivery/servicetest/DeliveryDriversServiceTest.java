@@ -1,20 +1,22 @@
 package com.sprint.food_delivery.servicetest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDriversRequestDTO;
-import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDriversResponseDTO;
-import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.IDeliveryDriversService;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.deliverymodule.deliverydrivers.DeliveryDriversRequestDTO;
+import com.sprint.food_delivery.deliverymodule.deliverydrivers.DeliveryDriversResponseDTO;
+import com.sprint.food_delivery.deliverymodule.deliverydrivers.IDeliveryDriversService;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional

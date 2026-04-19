@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Ratings;
+package com.sprint.food_delivery.checkoutmodule.ratings;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
-import com.sprint.food_delivery.OrderModule.Orders.OrdersRepository;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRepository;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.ordermodule.orders.Orders;
+import com.sprint.food_delivery.ordermodule.orders.OrdersRepository;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.Restaurants;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantsRepository;
 
 import jakarta.transaction.Transactional;
 

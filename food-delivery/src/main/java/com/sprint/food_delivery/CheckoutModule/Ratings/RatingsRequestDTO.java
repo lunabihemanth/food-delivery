@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Ratings;
+package com.sprint.food_delivery.checkoutmodule.ratings;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

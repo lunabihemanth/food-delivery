@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerRequestDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerResponseDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.ICustomerService;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.customersmodule.customers.CustomerRequestDTO;
+import com.sprint.food_delivery.customersmodule.customers.CustomerResponseDTO;
+import com.sprint.food_delivery.customersmodule.customers.ICustomerService;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional

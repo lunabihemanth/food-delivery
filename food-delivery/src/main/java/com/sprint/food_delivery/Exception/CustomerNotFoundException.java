@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.Exception;
+package com.sprint.food_delivery.exception;
 
 public class CustomerNotFoundException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.OrderModule.OrderItems;
+package com.sprint.food_delivery.ordermodule.orderitems;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.RestaurantsModule.Restaurants;
+package com.sprint.food_delivery.restaurantsmodule.restaurants;
 
 import java.util.List;
 import java.util.Optional;

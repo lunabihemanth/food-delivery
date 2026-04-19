@@ -1,10 +1,10 @@
-package com.sprint.food_delivery.OrderModule.Orders;
+package com.sprint.food_delivery.ordermodule.orders;
 
 import java.time.LocalDateTime;
 
-import com.sprint.food_delivery.CustomersModule.Customers.Customers;
-import com.sprint.food_delivery.DeliveryModule.DeliveryDrivers.DeliveryDrivers;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
+import com.sprint.food_delivery.customersmodule.customers.Customers;
+import com.sprint.food_delivery.deliverymodule.deliverydrivers.DeliveryDrivers;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.Restaurants;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

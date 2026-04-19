@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.OrdersCoupons;
+package com.sprint.food_delivery.checkoutmodule.orderscoupons;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.food_delivery.CheckoutModule.Coupons.*;
-import com.sprint.food_delivery.OrderModule.Orders.*;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.checkoutmodule.coupons.Coupons;
+import com.sprint.food_delivery.checkoutmodule.coupons.CouponsRepository;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.ordermodule.orders.Orders;
+import com.sprint.food_delivery.ordermodule.orders.OrdersRepository;
 
 @Service
 public class OrdersCouponsService implements IOrdersCouponsService {

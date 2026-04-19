@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.customersmodule.deliveryaddress;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

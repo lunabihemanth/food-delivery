@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CheckoutModule.Coupons;
+package com.sprint.food_delivery.checkoutmodule.coupons;
 
 import java.util.Optional;
 
@@ -19,6 +19,6 @@ public interface CouponsRepository extends JpaRepository<Coupons, Integer> {
 
     
 
-    // (Optional future use) check if coupon exists
+    // check if coupon exists
     boolean existsByCouponCode(String couponCode);
 }

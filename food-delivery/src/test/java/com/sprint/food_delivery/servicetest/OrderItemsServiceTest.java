@@ -1,21 +1,30 @@
 package com.sprint.food_delivery.servicetest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.OrderModule.OrderItems.*;
-import com.sprint.food_delivery.OrderModule.Orders.*;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.*;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.*;
-import com.sprint.food_delivery.CustomersModule.Customers.*;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
+import com.sprint.food_delivery.customersmodule.customers.CustomerRequestDTO;
+import com.sprint.food_delivery.customersmodule.customers.ICustomerService;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.ordermodule.orderitems.IOrderItemsService;
+import com.sprint.food_delivery.ordermodule.orderitems.OrderItemsRequestDTO;
+import com.sprint.food_delivery.ordermodule.orderitems.OrderItemsResponseDTO;
+import com.sprint.food_delivery.ordermodule.orders.IOrdersService;
+import com.sprint.food_delivery.ordermodule.orders.OrdersRequestDTO;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.IMenuItemsService;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItemsRequestDTO;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.IRestaurantsService;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantsRequestDTO;
 
 @SpringBootTest
 @Transactional

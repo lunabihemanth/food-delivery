@@ -1,9 +1,15 @@
-package com.sprint.food_delivery.OrderModule.OrderItems;
+package com.sprint.food_delivery.ordermodule.orderitems;
 
-import com.sprint.food_delivery.OrderModule.Orders.Orders;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItems;
+import com.sprint.food_delivery.ordermodule.orders.Orders;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItems;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 

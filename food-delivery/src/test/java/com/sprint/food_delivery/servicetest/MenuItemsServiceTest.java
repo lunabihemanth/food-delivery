@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ResourceNotFoundException;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.IMenuItemsService;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItemsRequestDTO;
-import com.sprint.food_delivery.RestaurantsModule.MenuItems.MenuItemsResponseDTO;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.IRestaurantsService;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantResponseDTO;
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.RestaurantsRequestDTO;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ResourceNotFoundException;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.IMenuItemsService;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItemsRequestDTO;
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItemsResponseDTO;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.IRestaurantsService;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantResponseDTO;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.RestaurantsRequestDTO;
 
 @SpringBootTest
 @Transactional

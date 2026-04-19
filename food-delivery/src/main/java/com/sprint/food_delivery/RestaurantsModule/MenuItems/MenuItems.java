@@ -1,6 +1,6 @@
-package com.sprint.food_delivery.RestaurantsModule.MenuItems;
+package com.sprint.food_delivery.restaurantsmodule.menuitems;
 
-import com.sprint.food_delivery.RestaurantsModule.Restaurants.Restaurants;
+import com.sprint.food_delivery.restaurantsmodule.restaurants.Restaurants;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

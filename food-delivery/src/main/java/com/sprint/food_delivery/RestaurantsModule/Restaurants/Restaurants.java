@@ -1,10 +1,15 @@
-package com.sprint.food_delivery.RestaurantsModule.Restaurants;
+package com.sprint.food_delivery.restaurantsmodule.restaurants;
+
+import java.util.List;
+
+import com.sprint.food_delivery.restaurantsmodule.menuitems.MenuItems;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +29,17 @@ public class Restaurants {
 
     @Column(name = "restaurant_phone")
     private String restaurantPhone;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<MenuItems> menuItems;
+
+    public List<MenuItems> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<MenuItems> menuItems) {
+        this.menuItems = menuItems;
+    }
 
     public Integer getRestaurantId() {
         return restaurantId;

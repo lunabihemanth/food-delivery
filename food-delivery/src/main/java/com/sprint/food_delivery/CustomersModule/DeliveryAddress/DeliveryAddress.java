@@ -1,6 +1,6 @@
-package com.sprint.food_delivery.CustomersModule.DeliveryAddress;
+package com.sprint.food_delivery.customersmodule.deliveryaddress;
 
-import com.sprint.food_delivery.CustomersModule.Customers.Customers;
+import com.sprint.food_delivery.customersmodule.customers.Customers;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.Customers;
+package com.sprint.food_delivery.customersmodule.customers;
 
 import java.util.List;
 import java.util.Optional;

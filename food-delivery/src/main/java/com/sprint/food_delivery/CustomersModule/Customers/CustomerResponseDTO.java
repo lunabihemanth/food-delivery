@@ -1,4 +1,4 @@
-package com.sprint.food_delivery.CustomersModule.Customers;
+package com.sprint.food_delivery.customersmodule.customers;
 
 public class CustomerResponseDTO {
 
@@ -14,6 +14,8 @@ public class CustomerResponseDTO {
         this.customerEmail = customerEmail;
         this.customerPhone = customerPhone;
     }
+
+    //Getters
 
     public Integer getCustomerId() {
         return customerId;

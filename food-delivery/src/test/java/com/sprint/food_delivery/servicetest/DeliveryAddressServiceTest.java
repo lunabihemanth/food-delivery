@@ -1,24 +1,28 @@
 package com.sprint.food_delivery.servicetest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerRequestDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.CustomerResponseDTO;
-import com.sprint.food_delivery.CustomersModule.Customers.ICustomerService;
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressRequestDTO;
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.DeliveryAddressResponseDTO;
-import com.sprint.food_delivery.CustomersModule.DeliveryAddress.IDeliveryAddressService;
-import com.sprint.food_delivery.Exception.BadRequestException;
-import com.sprint.food_delivery.Exception.ConflictException;
-import com.sprint.food_delivery.Exception.CustomerNotFoundException;
-import com.sprint.food_delivery.Exception.DeliveryAddressNotFoundException;
+import com.sprint.food_delivery.customersmodule.customers.CustomerRequestDTO;
+import com.sprint.food_delivery.customersmodule.customers.CustomerResponseDTO;
+import com.sprint.food_delivery.customersmodule.customers.ICustomerService;
+import com.sprint.food_delivery.customersmodule.deliveryaddress.DeliveryAddressRequestDTO;
+import com.sprint.food_delivery.customersmodule.deliveryaddress.DeliveryAddressResponseDTO;
+import com.sprint.food_delivery.customersmodule.deliveryaddress.IDeliveryAddressService;
+import com.sprint.food_delivery.exception.BadRequestException;
+import com.sprint.food_delivery.exception.ConflictException;
+import com.sprint.food_delivery.exception.CustomerNotFoundException;
+import com.sprint.food_delivery.exception.DeliveryAddressNotFoundException;
+
 
 @SpringBootTest
 @Transactional
