@@ -39,6 +39,8 @@ public class DeliveryAddress {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 
+    // Getters and Setters
+
     public Integer getAddressId() {
         return addressId;
     }

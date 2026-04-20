@@ -33,7 +33,7 @@ public class MenuItems {
     @JoinColumn(name = "restaurant_id")
     private Restaurants restaurant;
 
-    
+    // Getters and Setters    
 
     public Integer getItemId() {
         return itemId;

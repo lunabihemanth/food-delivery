@@ -5,5 +5,5 @@ import java.util.List;
 public interface IOrdersCouponsService {
     OrdersCouponsResponseDTO applyCoupon(OrdersCouponsRequestDTO dto);
     List<OrdersCouponsResponseDTO> getCouponsByOrderId(Integer orderId);
-    String removeCoupon(Integer orderId, Integer couponId);
+    String removeCoupon(Integer orderId, Integer couponId); //* */
 }

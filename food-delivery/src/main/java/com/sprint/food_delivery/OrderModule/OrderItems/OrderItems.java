@@ -36,6 +36,8 @@ public class OrderItems {
 	@NotNull(message = "Menu Item is Required.")
 	private MenuItems menuItem;
 
+	// Getters and Setters
+
 	public Integer getOrderItemId() {
 		return orderItemId;
 	}

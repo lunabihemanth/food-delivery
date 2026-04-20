@@ -42,7 +42,7 @@ public class Orders {
     @Column(name = "order_status")
     private String orderStatus;
 
-
+    // Getters and Setters
 
     public Integer getOrderId() {
         return orderId;

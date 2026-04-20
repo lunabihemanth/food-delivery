@@ -2,6 +2,8 @@ package com.sprint.food_delivery.checkoutmodule.ratings;
 
 import java.util.List;
 
+
+
 public interface IRatingsService {
     RatingsResponseDTO save(RatingsRequestDTO dto);
     List<RatingsResponseDTO> getAll();

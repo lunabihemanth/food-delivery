@@ -33,6 +33,8 @@ public class Restaurants {
     @OneToMany(mappedBy = "restaurant")
     private List<MenuItems> menuItems;
 
+    // Getters and Setters
+
     public List<MenuItems> getMenuItems() {
         return menuItems;
     }

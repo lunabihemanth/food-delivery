@@ -25,7 +25,7 @@ public class CouponController {
     @Autowired
     private ICouponService couponService;
 
-    // helper method for response structure
+    // helper method for response structure standardization
     private Map<String, Object> buildResponse(int status, String message, Object data) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", status);

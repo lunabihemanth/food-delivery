@@ -25,7 +25,7 @@ public class DeliveryDrivers {
     @Column(name = "driver_vehicle")
     private String driverVehicle;
 
-
+    // Getters and Setters
 
     public Integer getDriverId() {
         return driverId;

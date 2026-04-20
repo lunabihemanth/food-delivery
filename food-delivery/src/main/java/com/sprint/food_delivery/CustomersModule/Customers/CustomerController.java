@@ -25,7 +25,7 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
-    // helper method to build response
+    // helper method to build response structure
     private Map<String, Object> buildResponse(int status, String message, Object data) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", status);
