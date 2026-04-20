@@ -12,7 +12,6 @@ import { MyOrders } from './pages/customer/my-orders/my-orders';
 import { Rating } from './pages/customer/rating/rating';
 import { Coupons } from './pages/customer/coupons/coupons';
 import { Profile } from './pages/customer/profile/profile';
-import { Dashboard as RestaurantDashboard } from './pages/driver/dashboard/dashboard';
 import { MenuManagement } from './pages/restaurant/menu-management/menu-management';
 import { Orders as RestaurantOrders } from './pages/restaurant/orders/orders';
 import { Ratings } from './pages/restaurant/ratings/ratings';
@@ -20,7 +19,7 @@ import { Profile as RestaurantProfile } from './pages/customer/profile/profile';
 import { Dashboard as DriverDashboard } from './pages/driver/dashboard/dashboard';
 import { Deliveries } from './pages/driver/deliveries/deliveries';
 import { Profile as DriverProfile } from './pages/customer/profile/profile';
-
+import { Dashboard as RestaurantDashboard } from './pages/restaurant/dashboard/dashboard';
 export const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: Welcome },
@@ -55,6 +54,6 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AppRoutingModule { }

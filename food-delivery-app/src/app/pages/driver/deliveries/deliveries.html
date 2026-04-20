@@ -1,1 +1,92 @@
-<p>deliveries works!</p>
+<div class="min-h-screen bg-gray-900 text-white pb-20">
+
+  <!-- Header -->
+  <div class="bg-gray-800 px-6 py-4 flex items-center gap-4 sticky top-0 z-50">
+    <button (click)="router.navigate(['/driver/dashboard'])"
+      class="text-gray-400 hover:text-white text-xl">←</button>
+    <h2 class="text-xl font-bold">My Deliveries</h2>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="flex gap-2 px-6 pt-4 pb-2 overflow-x-auto">
+    <button *ngFor="let s of statuses"
+            (click)="selectedStatus = s"
+            [class]="selectedStatus === s ?
+              'px-4 py-2 rounded-full text-sm whitespace-nowrap bg-purple-600 text-white' :
+              'px-4 py-2 rounded-full text-sm whitespace-nowrap bg-gray-800 text-gray-400'">
+      {{ s }}
+    </button>
+  </div>
+
+  <div class="px-6 pt-4 space-y-4">
+
+    <div *ngFor="let order of filteredOrders()"
+         class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
+
+      <!-- Order header -->
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-bold text-lg">#{{ order.orderId }}</span>
+        <span class="text-xs px-3 py-1 rounded-full font-semibold"
+              [class]="getStatusClass(order.orderStatus)">
+          {{ order.orderStatus }}
+        </span>
+      </div>
+
+      <!-- Customer info -->
+      <div class="mb-3">
+        <p class="font-semibold">👤 {{ order.customerName }}</p>
+        <p class="text-gray-400 text-sm">📞 {{ order.customerPhone }}</p>
+        <p class="text-gray-400 text-sm mt-1">📍 {{ order.address }}</p>
+      </div>
+
+      <!-- Items -->
+      <div class="bg-gray-900 rounded-xl p-3 mb-3">
+        <p class="text-gray-400 text-xs mb-2">Items:</p>
+        <p *ngFor="let item of order.items"
+           class="text-sm text-white">• {{ item }}</p>
+      </div>
+
+      <!-- Total -->
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-gray-400">Total</span>
+        <span class="text-orange-400 font-bold text-lg">
+          ₹{{ order.totalAmount }}
+        </span>
+      </div>
+
+      <!-- Action buttons -->
+      <div *ngIf="order.orderStatus === 'Assigned'"
+           class="flex gap-3">
+        <button (click)="updateStatus(order, 'Out for Delivery')"
+          class="flex-1 bg-blue-600 hover:bg-blue-700 p-3
+                 rounded-xl font-semibold transition text-sm">
+          🚗 Start Delivery
+        </button>
+      </div>
+
+      <div *ngIf="order.orderStatus === 'Out for Delivery'"
+           class="flex gap-3">
+        <button (click)="updateStatus(order, 'Delivered')"
+          class="flex-1 bg-green-600 hover:bg-green-700 p-3
+                 rounded-xl font-semibold transition text-sm">
+          ✅ Mark Delivered
+        </button>
+      </div>
+
+      <div *ngIf="order.orderStatus === 'Delivered'"
+           class="text-center text-green-400 font-semibold py-2">
+        ✅ Delivery Completed
+      </div>
+
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="filteredOrders().length === 0"
+         class="text-center py-20">
+      <div class="text-5xl mb-4">🚗</div>
+      <p class="text-gray-400">No deliveries found</p>
+    </div>
+
+  </div>
+
+</div>
