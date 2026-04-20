@@ -1,0 +1,28 @@
+
+<div class="min-h-screen bg-gray-900 text-white p-6">
+
+  <h1 class="text-3xl font-bold text-center text-orange-400 mb-4">
+    Food Delivery System
+  </h1>
+
+  <p class="text-center text-gray-300 mb-8">
+    Click a team member to continue
+  </p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+    @for (member of teamMembers; track member.name) {
+      <div 
+        (click)="goToLogin()"
+        class="bg-gray-800 p-5 rounded-xl border border-gray-700 
+               cursor-pointer hover:border-orange-400 hover:scale-105 
+               transition duration-300"
+      >
+        <h3 class="text-lg font-semibold">{{ member.name }}</h3>
+        <p class="text-orange-400">{{ member.role }}</p>
+      </div>
+    }
+
+  </div>
+
+</div>
