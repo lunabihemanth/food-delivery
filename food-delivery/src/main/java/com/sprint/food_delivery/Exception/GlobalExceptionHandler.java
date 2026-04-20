@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -82,6 +83,17 @@ public class GlobalExceptionHandler {
                 buildResponse(HttpStatus.NOT_FOUND, ex.getMessage()),
                 HttpStatus.NOT_FOUND
         );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
+
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", 403);
+        error.put("message", "You are not allowed to access this resource");
+        error.put("timestamp", LocalDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
 }

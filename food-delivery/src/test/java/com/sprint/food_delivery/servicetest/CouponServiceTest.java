@@ -31,11 +31,11 @@ public class CouponServiceTest {
         CouponRequestDTO dto = new CouponRequestDTO();
         dto.setCouponCode("CODE_" + System.nanoTime());
         dto.setDiscountAmount(100.0);
-        dto.setExpiryDate(LocalDate.now().plusDays(5)); // ✅ future
+        dto.setExpiryDate(LocalDate.now().plusDays(5));
         return dto;
     }
 
-    // ✅ 1. Save Success
+    // 1. Save Success
     @Test
     void testSaveSuccess() {
         CouponResponseDTO res = couponService.save(createValidDTO());
@@ -44,7 +44,7 @@ public class CouponServiceTest {
         assertNotNull(res.getCouponId());
     }
 
-    // ❌ 2. Save - Empty Code
+    // 2. Save - Empty Code
     @Test
     void testSaveEmptyCode() {
         CouponRequestDTO dto = createValidDTO();
@@ -54,7 +54,7 @@ public class CouponServiceTest {
                 () -> couponService.save(dto));
     }
 
-    // ❌ 3. Save - Negative Discount
+    // 3. Save - Negative Discount
     @Test
     void testSaveInvalidDiscount() {
         CouponRequestDTO dto = createValidDTO();
@@ -64,7 +64,7 @@ public class CouponServiceTest {
                 () -> couponService.save(dto));
     }
 
-    // ❌ 4. Save - Expired Date
+    // 4. Save - Expired Date
     @Test
     void testSaveExpiredCoupon() {
         CouponRequestDTO dto = createValidDTO();
@@ -74,7 +74,7 @@ public class CouponServiceTest {
                 () -> couponService.save(dto));
     }
 
-    // ❌ 5. Save - Duplicate Code
+    // 5. Save - Duplicate Code
     @Test
     void testSaveDuplicateCode() {
         CouponRequestDTO dto = createValidDTO();
@@ -85,7 +85,7 @@ public class CouponServiceTest {
                 () -> couponService.save(dto));
     }
 
-    // ✅ 6. Get All
+    // 6. Get All
     @Test
     void testGetAll() {
         couponService.save(createValidDTO());
@@ -96,7 +96,7 @@ public class CouponServiceTest {
         assertTrue(list.size() >= 2);
     }
 
-    // ✅ 7. Find By ID
+    // 7. Find By ID
     @Test
     void testFindByIdSuccess() {
         CouponResponseDTO saved = couponService.save(createValidDTO());
@@ -107,21 +107,21 @@ public class CouponServiceTest {
         assertEquals(saved.getCouponId(), found.getCouponId());
     }
 
-    // ❌ 8. Find By ID - Invalid ID
+    // 8. Find By ID - Invalid ID
     @Test
     void testFindByIdInvalid() {
         assertThrows(BadRequestException.class,
                 () -> couponService.findById(0));
     }
 
-    // ❌ 9. Find By ID - Not Found
+    // 9. Find By ID - Not Found
     @Test
     void testFindByIdNotFound() {
         assertThrows(ResourceNotFoundException.class,
                 () -> couponService.findById(9999));
     }
 
-    // ✅ 10. Find By Code Success
+    // 10. Find By Code Success
     @Test
     void testFindByCodeSuccess() {
         CouponRequestDTO dto = createValidDTO();
@@ -133,21 +133,21 @@ public class CouponServiceTest {
         assertEquals(dto.getCouponCode(), found.getCouponCode());
     }
 
-    // ❌ 11. Find By Code - Empty
+    // 11. Find By Code - Empty
     @Test
     void testFindByCodeEmpty() {
         assertThrows(BadRequestException.class,
                 () -> couponService.findByCode(""));
     }
 
-    // ❌ 12. Find By Code - Not Found
+    // 12. Find By Code - Not Found
     @Test
     void testFindByCodeNotFound() {
         assertThrows(ResourceNotFoundException.class,
                 () -> couponService.findByCode("INVALID"));
     }
 
-    // ❌ 13. Find By Code - Expired Coupon (Simplified)
+    // 13. Find By Code - Expired Coupon (Simplified)
     @Test
     void testFindByCodeExpired() {
 
@@ -156,16 +156,12 @@ public class CouponServiceTest {
 
         CouponResponseDTO saved = couponService.save(dto);
 
-        // ❌ we CANNOT update to past → service blocks it
-        // So this scenario is not testable via service layer
-
-        // 👉 Instead just assert it works normally
         CouponResponseDTO found =
                 couponService.findByCode(saved.getCouponCode());
 
         assertNotNull(found);
     }
-    // ✅ 14. Update Success
+    // 14. Update Success
     @Test
     void testUpdateSuccess() {
         CouponResponseDTO saved = couponService.save(createValidDTO());
@@ -178,7 +174,7 @@ public class CouponServiceTest {
         assertEquals(update.getCouponCode(), updated.getCouponCode());
     }
 
-    // ❌ 15. Update Duplicate Code
+    // 15. Update Duplicate Code
     @Test
     void testUpdateDuplicateCode() {
         CouponResponseDTO c1 = couponService.save(createValidDTO());
@@ -191,7 +187,7 @@ public class CouponServiceTest {
                 () -> couponService.update(c2.getCouponId(), update));
     }
 
-    // ❌ 16. Update Invalid Discount
+    // 16. Update Invalid Discount
     @Test
     void testUpdateInvalidDiscount() {
         CouponResponseDTO saved = couponService.save(createValidDTO());
@@ -203,7 +199,7 @@ public class CouponServiceTest {
                 () -> couponService.update(saved.getCouponId(), update));
     }
 
-    // ✅ 17. Delete Success
+    // 17. Delete Success
     @Test
     void testDeleteSuccess() {
         CouponResponseDTO saved = couponService.save(createValidDTO());
@@ -213,14 +209,14 @@ public class CouponServiceTest {
         assertTrue(res.contains("deleted"));
     }
 
-    // ❌ 18. Delete Invalid ID
+    // 18. Delete Invalid ID
     @Test
     void testDeleteInvalidId() {
         assertThrows(BadRequestException.class,
                 () -> couponService.delete(0));
     }
 
-    // ❌ 19. Delete Not Found
+    // 19. Delete Not Found
     @Test
     void testDeleteNotFound() {
         assertThrows(ResourceNotFoundException.class,
